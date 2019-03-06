@@ -12,15 +12,11 @@ import me.aflak.libraries.R;
 import me.aflak.libraries.ui.chat.interactor.ChatInteractor;
 import me.aflak.libraries.ui.chat.view.ChatView;
 
-/**
- * Created by Omar on 20/12/2017.
- */
-
 public class ChatPresenterImpl implements ChatPresenter {
     private ChatView view;
     private ChatInteractor interactor;
     private BluetoothDevice device;
-    private byte aByte[] = {0x4D, 0x54, 0x00, 0x00, 0x00, 0x06, 0x00, 0x25, 0x24} ;
+    private byte aByte[] = {0x4D, 0x54, 0x00, 0x00, 0x00, 0x06, 0x00, (byte) 0xFE, 0x24} ;
 
     public ChatPresenterImpl(ChatView view, ChatInteractor interactor) {
         this.view = view;
@@ -37,9 +33,9 @@ public class ChatPresenterImpl implements ChatPresenter {
 
     @Override
     public void onHelloWorld() {
+        interactor.sendMessageByte(aByte);
         for (int i = 0; i < 1; i++) //aByte.length
         {
-            interactor.sendMessageByte(aByte[i]);
             view.appendMessage("--> " + aByte[i]);
         }
     }

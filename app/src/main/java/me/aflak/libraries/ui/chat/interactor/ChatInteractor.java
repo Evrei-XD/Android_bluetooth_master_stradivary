@@ -6,15 +6,12 @@ import android.bluetooth.BluetoothDevice;
 import me.aflak.bluetooth.BluetoothCallback;
 import me.aflak.bluetooth.DeviceCallback;
 
-/**
- * Created by Omar on 20/12/2017.
- */
 
 public interface ChatInteractor {
     boolean isBluetoothEnabled();
     void enableBluetooth();
     void connectToDevice(BluetoothDevice device, DeviceCallback callback);
-    void sendMessageByte (byte message);
+    void sendMessageByte (byte[] message);
     void sendMessagestr(String message);
     void onStart(BluetoothCallback bluetoothCallback, Activity activity);
     void onStop();

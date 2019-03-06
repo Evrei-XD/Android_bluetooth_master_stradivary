@@ -22,9 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by Omar on 14/07/2015.
- */
+
 public class Bluetooth {
     private static final int REQUEST_ENABLE_BT = 1111;
 
@@ -197,13 +195,13 @@ public class Bluetooth {
         return connected;
     }
 
-    public void send(Byte msg, String charset){
+    public void send(byte[] msg, String charset){
         try {
             if(!TextUtils.isEmpty(charset)) {
 //                out.write(msg.getByte(charset));//Eg: "US-ASCII" as default
 //                out.write(msg.getByte());//Sending as UTF-8
             }else {
-                out.write(aByte);//Eg: "US-ASCII" as default
+                out.write(msg);//Eg: "US-ASCII" as default
             }
         } catch (final IOException e) {
             connected=false;
@@ -240,7 +238,7 @@ public class Bluetooth {
     }
 
 
-    public void send(Byte msg){
+    public void send(byte[] msg){
         send(msg, null);
     }
 

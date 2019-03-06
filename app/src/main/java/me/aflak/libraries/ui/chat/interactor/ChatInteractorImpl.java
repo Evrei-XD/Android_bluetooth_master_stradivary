@@ -9,9 +9,6 @@ import me.aflak.bluetooth.Bluetooth;
 import me.aflak.bluetooth.BluetoothCallback;
 import me.aflak.bluetooth.DeviceCallback;
 
-/**
- * Created by Omar on 20/12/2017.
- */
 
 public class ChatInteractorImpl implements ChatInteractor {
     private Bluetooth bluetooth;
@@ -37,7 +34,7 @@ public class ChatInteractorImpl implements ChatInteractor {
     }
 
     @Override
-    public void sendMessageByte (byte message){
+    public void sendMessageByte (byte[] message){
         bluetooth.send(message);
     }
 
