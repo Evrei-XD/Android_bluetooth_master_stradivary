@@ -20,7 +20,7 @@ public class ChatPresenterImpl implements ChatPresenter {
     private ChatView view;
     private ChatInteractor interactor;
     private BluetoothDevice device;
-    private byte aByte[] = {0x4D, 0x54, 0x00, 0x00, 0x00, 0x06, 0x00, 0x24, 0x24} ;
+    private byte aByte[] = {0x4D, 0x54, 0x00, 0x00, 0x00, 0x06, 0x00, 0x25, 0x24} ;
 
     public ChatPresenterImpl(ChatView view, ChatInteractor interactor) {
         this.view = view;
