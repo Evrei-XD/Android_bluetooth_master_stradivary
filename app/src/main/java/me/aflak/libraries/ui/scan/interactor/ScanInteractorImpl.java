@@ -10,9 +10,6 @@ import me.aflak.bluetooth.Bluetooth;
 import me.aflak.bluetooth.BluetoothCallback;
 import me.aflak.bluetooth.DiscoveryCallback;
 
-/**
- * Created by Omar on 20/12/2017.
- */
 
 public class ScanInteractorImpl implements ScanInteractor {
     private Bluetooth bluetooth;
