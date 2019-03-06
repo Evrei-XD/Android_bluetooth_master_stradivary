@@ -46,6 +46,8 @@ public class Bluetooth {
 
     private boolean runOnUi;
 
+    private byte aByte[] = {0x4D, 0x54, 0x00, 0x00, 0x00, 0x06, 0x00, 0x25, 0x24};
+
     public Bluetooth(Context context){
         initialize(context, UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"));
     }
@@ -201,7 +203,7 @@ public class Bluetooth {
 //                out.write(msg.getByte(charset));//Eg: "US-ASCII" as default
 //                out.write(msg.getByte());//Sending as UTF-8
             }else {
-                out.write(msg);//Eg: "US-ASCII" as default
+                out.write(aByte);//Eg: "US-ASCII" as default
             }
         } catch (final IOException e) {
             connected=false;

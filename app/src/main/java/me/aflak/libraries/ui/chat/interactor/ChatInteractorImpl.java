@@ -3,6 +3,8 @@ package me.aflak.libraries.ui.chat.interactor;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 
+import java.io.IOException;
+
 import me.aflak.bluetooth.Bluetooth;
 import me.aflak.bluetooth.BluetoothCallback;
 import me.aflak.bluetooth.DeviceCallback;
@@ -35,8 +37,8 @@ public class ChatInteractorImpl implements ChatInteractor {
     }
 
     @Override
-    public void sendMessageByte(Byte message) {
-        bluetooth.send(message); //Sending as "US-ASCII" by default
+    public void sendMessageByte (byte message){
+        bluetooth.send(message);
     }
 
     @Override
