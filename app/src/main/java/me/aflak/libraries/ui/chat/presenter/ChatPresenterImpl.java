@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 
 
+import java.util.ArrayList;
 
 import me.aflak.bluetooth.BluetoothCallback;
 import me.aflak.bluetooth.DeviceCallback;
@@ -18,7 +19,7 @@ public class ChatPresenterImpl implements ChatPresenter {
     private ChatInteractor interactor;
     private BluetoothDevice device;
     private byte aByte[] = {0x4D, 0x54, 0x01, 0x00, 0x00, 0x03, 0x00, 0x01, 0x24} ;
-    private byte[] txtbyteout;
+    private byte txtbyteout[] = {0x00, 0x00} ;
 
     public ChatPresenterImpl(ChatView view, ChatInteractor interactor) {
         this.view = view;
@@ -50,12 +51,20 @@ public class ChatPresenterImpl implements ChatPresenter {
 //                txtbyte[i-1] = (byte) (txtbyte[i-1]+txtbyte[i]);
 //            }
 //        }
+//        System.arraycopy(txtbyte, 0, txtbyteout, 0, 2);
+//        for (int i=0; i < txtbyte.length; i++){
+//            txtbyteout.add(new byte[(txtbyte[i])]);
+//        }
+//        for (int i = 1; i < txtbyte.length-1; i+=2) //aByte.length
+//        {
+//            txtbyteout.remove(i);
+//        }
 //        for (int i = 0; i < 1; i++) //aByte.length
 //        {
 //            System.arraycopy(txtbyte, i*2, txtbyteout, i, 1);
 //        }
         interactor.sendMessageByte(aByte);
-        for (int i = 0; i < 1; i++) //aByte.length
+        for (int i = 0; i < aByte.length; i++) //aByte.length
         {
             view.appendMessage("--> " + aByte[i]);
         }
