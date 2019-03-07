@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 
 
+
 import me.aflak.bluetooth.BluetoothCallback;
 import me.aflak.bluetooth.DeviceCallback;
 import me.aflak.libraries.R;
@@ -16,7 +17,8 @@ public class ChatPresenterImpl implements ChatPresenter {
     private ChatView view;
     private ChatInteractor interactor;
     private BluetoothDevice device;
-    private byte aByte[] = {0x4D, 0x54, 0x00, 0x00, 0x00, 0x06, 0x00, (byte) 0xFE, 0x24} ;
+    private byte aByte[] = {0x4D, 0x54, 0x01, 0x00, 0x00, 0x03, 0x00, 0x01, 0x24} ;
+    private byte[] txtbyteout;
 
     public ChatPresenterImpl(ChatView view, ChatInteractor interactor) {
         this.view = view;
@@ -32,9 +34,28 @@ public class ChatPresenterImpl implements ChatPresenter {
     }
 
     @Override
-    public void onHelloWorld() {
+    public void onHelloWorld(byte[] txtbyte) {
+//        for (int i = 0; i < txtbyte.length; i++) //aByte.length
+//        {
+//            txtbyte[i] = (byte) (txtbyte[i]-((byte) 0x30));
+//            if (txtbyte[i] > 0x0F){
+//                txtbyte[i] = (byte) (txtbyte[i] - 0x07);
+//                if(txtbyte[i] > 0x0F){
+//                    txtbyte[i] = (byte) (txtbyte[i] - 0x20);
+//                }
+//            }
+//            if(i%2==0){
+//                txtbyte[i] = (byte) (txtbyte[i] << 4);
+//            } else {
+//                txtbyte[i-1] = (byte) (txtbyte[i-1]+txtbyte[i]);
+//            }
+//        }
+//        for (int i = 0; i < 1; i++) //aByte.length
+//        {
+//            System.arraycopy(txtbyte, i*2, txtbyteout, i, 1);
+//        }
         interactor.sendMessageByte(aByte);
-        for (int i = 0; i < aByte.length; i++) //aByte.length
+        for (int i = 0; i < 1; i++) //aByte.length
         {
             view.appendMessage("--> " + aByte[i]);
         }

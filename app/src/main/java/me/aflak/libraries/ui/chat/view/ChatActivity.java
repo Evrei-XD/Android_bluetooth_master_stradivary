@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.lang.annotation.Retention;
 
 import javax.inject.Inject;
 
@@ -27,6 +30,9 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     @BindView(R.id.activity_chat_status) TextView state;
     @BindView(R.id.activity_chat_messages) TextView messages;
     @BindView(R.id.activity_chat_hello_world) Button helloWorld;
+    private String textstr;
+    public byte[] Textbyte;
+    EditText hexText;
 
     @Inject ChatPresenter presenter;
 
@@ -43,11 +49,14 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
         ButterKnife.bind(this);
 
         presenter.onCreate(getIntent());
+        hexText = (EditText) findViewById(R.id.hexText);
     }
 
     @OnClick(R.id.activity_chat_hello_world)
     public void onHelloWorld(){
-        presenter.onHelloWorld();
+        textstr = hexText.getText().toString();
+        Textbyte = textstr.getBytes();
+        presenter.onHelloWorld(Textbyte);
     }
 
     @Override

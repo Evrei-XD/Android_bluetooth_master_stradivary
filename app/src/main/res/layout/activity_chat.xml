@@ -45,7 +45,7 @@
         android:layout_alignParentBottom="true"/>
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/hexText"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/activity_chat_hello_world"
