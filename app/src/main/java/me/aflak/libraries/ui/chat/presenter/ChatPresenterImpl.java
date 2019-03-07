@@ -34,7 +34,7 @@ public class ChatPresenterImpl implements ChatPresenter {
     @Override
     public void onHelloWorld() {
         interactor.sendMessageByte(aByte);
-        for (int i = 0; i < 1; i++) //aByte.length
+        for (int i = 0; i < aByte.length; i++) //aByte.length
         {
             view.appendMessage("--> " + aByte[i]);
         }
