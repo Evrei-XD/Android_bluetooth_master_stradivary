@@ -10,11 +10,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.os.Parcel;
 import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
@@ -303,16 +305,21 @@ public class Bluetooth {
     }
 
     private class ReceiveThread extends Thread implements Runnable{
+        private byte[] msg;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String string = reader.readLine();
         public void run(){
-            String msg;
             try {
-                while((msg = input.readLine()) != null) {
+                while((new int p) != null) //((System.in).read(msg))
+                {
                     if(deviceCallback != null){
-                        final String msgCopy = msg;
+                        final byte[] msgCopy = msg;
                         ThreadHelper.run(runOnUi, activity, new Runnable() {
                             @Override
                             public void run() {
                                 deviceCallback.onMessage(msgCopy);
+                                String string = new String(msgCopy);
+                                System.out.println("байты в строку:"+ string);
                             }
                         });
                     }

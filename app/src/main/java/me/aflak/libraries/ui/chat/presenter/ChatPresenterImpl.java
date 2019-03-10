@@ -85,7 +85,7 @@ public class ChatPresenterImpl implements ChatPresenter {
         }
 
         @Override
-        public void onMessage(String message) {
+        public void onMessage(byte[] message) {
             view.appendMessage("<-- " + message);
         }
 
