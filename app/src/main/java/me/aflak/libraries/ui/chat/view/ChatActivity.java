@@ -8,8 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.annotation.Retention;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -17,7 +15,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.aflak.libraries.MyApp;
 import me.aflak.libraries.R;
-import me.aflak.libraries.data.BluetoothModule;
 import me.aflak.libraries.ui.chat.data.ChatModule;
 import me.aflak.libraries.ui.chat.data.DaggerChatComponent;
 import me.aflak.libraries.ui.chat.presenter.ChatPresenter;

@@ -10,13 +10,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
-import android.os.Parcel;
 import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
@@ -305,25 +303,37 @@ public class Bluetooth {
     }
 
     private class ReceiveThread extends Thread implements Runnable{
-        private byte[] msg;
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String string = reader.readLine();
+        private int msg = 65;
+        private StringBuffer msgstr = new StringBuffer();
         public void run(){
             try {
-                while((new int p) != null) //((System.in).read(msg))
+                int i=0;
+                while((msg = (byte)(input.read())) != -1) //((System.in).read(msg)) //((System.in).read(msg))   //((input.read())) != -1
                 {
-                    if(deviceCallback != null){
-                        final byte[] msgCopy = msg;
+//                    if (msgstr == null){
+//                        msgstr = String.valueOf((char) msg);
+//                    } else {
+//                        msgstr = msgstr + (char) msg;
+//                    }
+                    msgstr.append((char)msg);
+
+                    if((deviceCallback != null) && (msg == 36) ){
+                        final String msgCopy = String.valueOf(msgstr);
                         ThreadHelper.run(runOnUi, activity, new Runnable() {
                             @Override
                             public void run() {
                                 deviceCallback.onMessage(msgCopy);
-                                String string = new String(msgCopy);
-                                System.out.println("байты в строку:"+ string);
+                                String string = new String(String.valueOf((char)msg));
+                                System.out.println("сделал цикл:"+ msgCopy);
                             }
                         });
                     }
+                    if(msg == 36) {msgstr.setLength(0); System.out.println("обнуление");}
+
+                    System.out.println("вышел из ифа. Итератор:" + i);
+                    i+=1;
                 }
+
             } catch (final IOException e) {
                 connected=false;
                 if(deviceCallback != null){

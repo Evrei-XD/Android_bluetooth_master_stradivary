@@ -5,9 +5,6 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Handler;
 
-
-import java.util.ArrayList;
-
 import me.aflak.bluetooth.BluetoothCallback;
 import me.aflak.bluetooth.DeviceCallback;
 import me.aflak.libraries.R;
@@ -85,8 +82,9 @@ public class ChatPresenterImpl implements ChatPresenter {
         }
 
         @Override
-        public void onMessage(byte[] message) {
-            view.appendMessage("<-- " + message);
+        public void onMessage(String message) {
+            String string = new String(message);
+            view.appendMessage("<-- " + string);
         }
 
         @Override
