@@ -46,13 +46,12 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
         ButterKnife.bind(this);
 
         presenter.onCreate(getIntent());
-        hexText = (EditText) findViewById(R.id.hexText);
     }
 
     @OnClick(R.id.activity_chat_hello_world)
     public void onHelloWorld(){
-        textstr = hexText.getText().toString();
-        Textbyte = textstr.getBytes();
+//        textstr = hexText.getText().toString();
+//        Textbyte = textstr.getBytes();
         presenter.onHelloWorld(Textbyte);
     }
 

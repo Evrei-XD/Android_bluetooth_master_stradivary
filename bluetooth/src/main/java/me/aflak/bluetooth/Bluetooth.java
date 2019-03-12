@@ -38,6 +38,7 @@ public class Bluetooth {
     private OutputStream out;
 
     private DeviceCallback deviceCallback;
+    private ParserCallback parserCallback;
     private DiscoveryCallback discoveryCallback;
     private BluetoothCallback bluetoothCallback;
     private boolean connected;
@@ -304,19 +305,60 @@ public class Bluetooth {
 
     private class ReceiveThread extends Thread implements Runnable{
         private int msg = 65;
+        private int summator = 0;     //для проверки суммы первых символов МТ и последнего $
+        private int msgLenght = 0;    //для свапа младших и старших байт длинны данных
+        private int msgRegtster = 0;  //для свапа младших и старших байт номера регистра
+        private byte lowByte = 0;     //для записи младшего байта при перемене младших и старших байт
+        private boolean request = true;
         private StringBuffer msgstr = new StringBuffer();
         public void run(){
             try {
-                int i=0;
-                while((msg = (byte)(input.read())) != -1) //((System.in).read(msg)) //((System.in).read(msg))   //((input.read())) != -1
+                int i=1;
+                while((msg = input.read()) != -1) //((System.in).read(msg)) //((System.in).read(msg))   //((input.read())) != -1
                 {
-//                    if (msgstr == null){
-//                        msgstr = String.valueOf((char) msg);
-//                    } else {
-//                        msgstr = msgstr + (char) msg;
-//                    }
-                    msgstr.append((char)msg);
 
+                    if((i == 1)||(i == 2)||(msg == 36)){
+                        summator += msg;
+                        if (summator == 197){
+                            //parserCallback.givsCorrectAcceptance(true);
+                            System.out.println("Принята посылка :)");
+                        } else {
+                            if(msg == 36){
+                                System.out.println("Пришла лажа :(");
+                                //parserCallback.givsCorrectAcceptance(false);
+                            }
+                        }
+                    }
+
+                    if(i == 3){
+                        lowByte = (byte) msg;
+                    }
+                    if(i == 4){
+                        msgLenght = (msg << 8) + lowByte; //msgLenght содержит количество байт данных в посылке
+                        System.out.println("длина даных:"+msgLenght);
+                        //parserCallback.givsLenhgt(msgLenght);
+                    }
+                    if(i == 5){
+                        if(msg == 1){
+                            request = true;
+                            //parserCallback.givsRequest(request);
+                        } else {
+                            request = false;
+                            //parserCallback.givsRequest(request);
+                        }
+                    }
+                    if(i == 6){
+                        lowByte = (byte) msg;
+                    }
+                    if(i == 7){
+                        msgRegtster = (msg << 8) + lowByte; //msgRegtster содержит номер регистра
+                        System.out.println("номер регистра:"+msgRegtster);
+                        //parserCallback.givsRegister(msgRegtster);
+                    }
+                    if((i >= 8)&&(i <=(msgLenght+7))){
+                        System.out.println("считывание данных:" + msg);
+                    }
+                    msgstr.append((char)msg);
                     if((deviceCallback != null) && (msg == 36) ){
                         final String msgCopy = String.valueOf(msgstr);
                         ThreadHelper.run(runOnUi, activity, new Runnable() {
@@ -328,10 +370,14 @@ public class Bluetooth {
                             }
                         });
                     }
-                    if(msg == 36) {msgstr.setLength(0); System.out.println("обнуление");}
 
-                    System.out.println("вышел из ифа. Итератор:" + i);
-                    i+=1;
+                    i++;
+                    if(msg == 36) {
+                        System.out.println("lenght:"+msgstr.length()+"+обнуление");
+                        msgstr.setLength(0);
+                        summator = 0;
+                        i=1;
+                    }
                 }
 
             } catch (final IOException e) {
