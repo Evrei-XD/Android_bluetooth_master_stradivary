@@ -309,22 +309,30 @@ public class Bluetooth {
         private int msgLenght = 0;    //для свапа младших и старших байт длинны данных
         private int msgRegtster = 0;  //для свапа младших и старших байт номера регистра
         private byte lowByte = 0;     //для записи младшего байта при перемене младших и старших байт
+        private int i=1;
         private boolean request = true;
+        public boolean no_error = true;
         private StringBuffer msgstr = new StringBuffer();
         public void run(){
             try {
-                int i=1;
                 while((msg = input.read()) != -1) //((System.in).read(msg)) //((System.in).read(msg))   //((input.read())) != -1
                 {
 
-                    if((i == 1)||(i == 2)||(msg == 36)){
+                    if((i == 1)||(i == 2)||((i == (8+msgLenght)))){
                         summator += msg;
                         if (summator == 197){
                             //parserCallback.givsCorrectAcceptance(true);
                             System.out.println("Принята посылка :)");
                         } else {
-                            if(msg == 36){
+                            if((i == (8+msgLenght))&&(msg != 36)){
                                 System.out.println("Пришла лажа :(");
+                                System.out.println("summator:"+summator);
+                                no_error = false;
+                                msgstr.setLength(0);
+                                msgLenght = 0;
+                                msgRegtster = 0;
+                                summator = 0;
+                                i = 1;
                                 //parserCallback.givsCorrectAcceptance(false);
                             }
                         }
@@ -356,27 +364,46 @@ public class Bluetooth {
                         //parserCallback.givsRegister(msgRegtster);
                     }
                     if((i >= 8)&&(i <=(msgLenght+7))){
-                        System.out.println("считывание данных:" + msg);
+                        if(msg == 36){
+                            System.out.println("Пришла лажа :((");
+                            no_error = false;
+                        } else {
+                            System.out.println("считывание данных:" + msg);
+                        }
                     }
-                    msgstr.append((char)msg);
-                    if((deviceCallback != null) && (msg == 36) ){
+                    if(no_error) {
+                        i++;
+                        msgstr.append((char)msg);
+                    }
+                    if(i == (9+msgLenght)) {
+                        System.out.println("lenght:"+msgstr.length()+" ОБНУЛЕНИЕ i="+i);
+                    }
+                    if(i > (msgLenght+9)){
+                        System.out.println("------> i=" +i+" msgLenght="+msgLenght);
+                        msgstr.setLength(0);
+                        no_error = true;
+                        msgLenght = 0;
+                        msgRegtster = 0;
+                        summator = 0;
+                        i=1;
+                    }
+                    if(((deviceCallback != null) && (msg == 36))||(!no_error)){
                         final String msgCopy = String.valueOf(msgstr);
                         ThreadHelper.run(runOnUi, activity, new Runnable() {
                             @Override
                             public void run() {
-                                deviceCallback.onMessage(msgCopy);
-                                String string = new String(String.valueOf((char)msg));
+                                if(no_error) {
+                                    deviceCallback.onMessage(msgCopy);
+                                }
                                 System.out.println("сделал цикл:"+ msgCopy);
+                                msgstr.setLength(0);
+                                no_error = true;
+                                msgLenght = 0;
+                                msgRegtster = 0;
+                                summator = 0;
+                                i=1;
                             }
                         });
-                    }
-
-                    i++;
-                    if(msg == 36) {
-                        System.out.println("lenght:"+msgstr.length()+"+обнуление");
-                        msgstr.setLength(0);
-                        summator = 0;
-                        i=1;
                     }
                 }
 
