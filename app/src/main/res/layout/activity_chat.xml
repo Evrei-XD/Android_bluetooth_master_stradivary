@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,13 +22,14 @@
         android:id="@+id/activity_chat_messages"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/activity_chat_hello_world"
         android:layout_below="@+id/activity_chat_status"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginBottom="104dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginBottom="0dp"
         android:scrollbars="vertical"
         android:textSize="18dp" />
 
@@ -37,4 +39,46 @@
         android:layout_height="wrap_content"
         android:text="@string/helloWorld"
         android:layout_alignParentBottom="true"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:layout_marginTop="3dp"
+        android:text="CH1:" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_toEndOf="@+id/valueCH1"
+        android:layout_toRightOf="@+id/valueCH1"
+        android:text="mV" />
+
+    <TextView
+        android:id="@+id/valueCH1"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignParentRight="false"
+        android:layout_centerInParent="false"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_toRightOf="@+id/textView"
+        android:text="TextView"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:fontFamily="sans-serif-medium" />
 </RelativeLayout>

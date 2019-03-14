@@ -7,6 +7,7 @@ import android.os.Handler;
 
 import me.aflak.bluetooth.BluetoothCallback;
 import me.aflak.bluetooth.DeviceCallback;
+import me.aflak.bluetooth.ParserCallback;
 import me.aflak.libraries.R;
 import me.aflak.libraries.ui.chat.interactor.ChatInteractor;
 import me.aflak.libraries.ui.chat.view.ChatView;
@@ -61,11 +62,44 @@ public class ChatPresenterImpl implements ChatPresenter {
 //            System.arraycopy(txtbyte, i*2, txtbyteout, i, 1);
 //        }
         interactor.sendMessageByte(aByte);
-        for (int i = 0; i < aByte.length; i++) //aByte.length
+        for (int i = 0; i < 1; i++) //aByte.length
         {
             view.appendMessage("--> " + aByte[i]);
         }
     }
+
+    private ParserCallback parserCallback = new ParserCallback(){
+
+        @Override
+        public void givsLenhgt(Integer lenght) {
+            Integer integer =  new Integer(lenght);
+            System.out.println("принятая длинна:"+integer);
+        }
+
+        @Override
+        public void givsRequest(Boolean request) {
+            Boolean bolean = new Boolean(request);
+            System.out.println("приём:"+bolean);
+        }
+
+        @Override
+        public void givsChannel(int channel) {
+            Integer charr = new Integer(channel);
+            System.out.println("принятая длинна:"+charr);
+        }
+
+        @Override
+        public void givsRegister(Integer register) {
+            Integer registr = new Integer(register);
+            System.out.println("принятая значение регистра:"+registr);
+        }
+
+        @Override
+        public void givsCorrectAcceptance(Boolean correct_acceptence) {
+            Boolean boleann = new Boolean(correct_acceptence);
+            System.out.println("проверка CRC:"+boleann);
+        }
+    };
 
     private DeviceCallback communicationCallback = new DeviceCallback() {
         @Override
@@ -79,6 +113,7 @@ public class ChatPresenterImpl implements ChatPresenter {
             view.setStatus(R.string.bluetooth_connecting);
             view.enableHWButton(false);
             interactor.connectToDevice(device, communicationCallback);
+            interactor.parsingExperimental(parserCallback);
         }
 
         @Override
@@ -100,6 +135,7 @@ public class ChatPresenterImpl implements ChatPresenter {
                 @Override
                 public void run() {
                     interactor.connectToDevice(device, communicationCallback);
+                    interactor.parsingExperimental(parserCallback);
                 }
             }, 3000);
         }
@@ -110,6 +146,7 @@ public class ChatPresenterImpl implements ChatPresenter {
         interactor.onStart(bluetoothCallback, activity);
         if(interactor.isBluetoothEnabled()){
             interactor.connectToDevice(device, communicationCallback);
+            interactor.parsingExperimental(parserCallback);
             view.setStatus(R.string.bluetooth_connecting);
         }
         else{
@@ -131,6 +168,7 @@ public class ChatPresenterImpl implements ChatPresenter {
         @Override
         public void onBluetoothOn() {
             interactor.connectToDevice(device, communicationCallback);
+            interactor.parsingExperimental(parserCallback);
             view.setStatus(R.string.bluetooth_connecting);
             view.enableHWButton(false);
         }

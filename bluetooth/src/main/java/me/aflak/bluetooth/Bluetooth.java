@@ -310,8 +310,9 @@ public class Bluetooth {
         private int msgRegtster = 0;  //для свапа младших и старших байт номера регистра
         private byte lowByte = 0;     //для записи младшего байта при перемене младших и старших байт
         private int i=1;
-        private boolean request = true;
-        public boolean no_error = true;
+        private boolean request = true;                //true-приём false-передача
+        public boolean no_error = true;                //true-нет ошибок false-ошибка парсинга
+        private boolean msgCorrectAcceptance = true;   //true-контрольная сумма+ false-контрольная сумма-
         private StringBuffer msgstr = new StringBuffer();
         public void run(){
             try {
@@ -321,10 +322,10 @@ public class Bluetooth {
                     if((i == 1)||(i == 2)||((i == (8+msgLenght)))){
                         summator += msg;
                         if (summator == 197){
-                            //parserCallback.givsCorrectAcceptance(true);
+                            msgCorrectAcceptance = true;
                             System.out.println("Принята посылка :)");
                         } else {
-                            if((i == (8+msgLenght))&&(msg != 36)){
+                            if(((i == (8+msgLenght))&&(msg != 36))||((i == 1)&&(msg != 77))||((i == 2)&&(msg != 84))){
                                 System.out.println("Пришла лажа :(");
                                 System.out.println("summator:"+summator);
                                 no_error = false;
@@ -333,7 +334,7 @@ public class Bluetooth {
                                 msgRegtster = 0;
                                 summator = 0;
                                 i = 1;
-                                //parserCallback.givsCorrectAcceptance(false);
+                                msgCorrectAcceptance = false;
                             }
                         }
                     }
@@ -344,15 +345,12 @@ public class Bluetooth {
                     if(i == 4){
                         msgLenght = (msg << 8) + lowByte; //msgLenght содержит количество байт данных в посылке
                         System.out.println("длина даных:"+msgLenght);
-                        //parserCallback.givsLenhgt(msgLenght);
                     }
                     if(i == 5){
                         if(msg == 1){
                             request = true;
-                            //parserCallback.givsRequest(request);
                         } else {
                             request = false;
-                            //parserCallback.givsRequest(request);
                         }
                     }
                     if(i == 6){
@@ -361,7 +359,6 @@ public class Bluetooth {
                     if(i == 7){
                         msgRegtster = (msg << 8) + lowByte; //msgRegtster содержит номер регистра
                         System.out.println("номер регистра:"+msgRegtster);
-                        //parserCallback.givsRegister(msgRegtster);
                     }
                     if((i >= 8)&&(i <=(msgLenght+7))){
                         if(msg == 36){
@@ -389,13 +386,21 @@ public class Bluetooth {
                     }
                     if(((deviceCallback != null) && (msg == 36))||(!no_error)){
                         final String msgCopy = String.valueOf(msgstr);
+                        final Integer msgLenghtf = msgLenght;
+                        final Boolean requestf = request;
+                        final Integer msgRegtsterf = msgRegtster;
+                        final Boolean msgCorrectAcceptancef = msgCorrectAcceptance;
                         ThreadHelper.run(runOnUi, activity, new Runnable() {
                             @Override
                             public void run() {
-                                if(no_error) {
+                                if(no_error && msgCorrectAcceptance) {
+                                    parserCallback.givsLenhgt(msgLenghtf);
+                                    parserCallback.givsRequest(requestf);
+                                    parserCallback.givsRegister(msgRegtsterf);
                                     deviceCallback.onMessage(msgCopy);
+                                    System.out.println("сделал цикл:"+ msgCopy);
                                 }
-                                System.out.println("сделал цикл:"+ msgCopy);
+                                parserCallback.givsCorrectAcceptance(msgCorrectAcceptancef);
                                 msgstr.setLength(0);
                                 no_error = true;
                                 msgLenght = 0;
@@ -607,6 +612,10 @@ public class Bluetooth {
 
     public void setDeviceCallback(DeviceCallback deviceCallback) {
         this.deviceCallback = deviceCallback;
+    }
+
+    public void enableParsing(ParserCallback parserCallback) {
+        this.parserCallback = parserCallback;
     }
 
     public void removeCommunicationCallback(){

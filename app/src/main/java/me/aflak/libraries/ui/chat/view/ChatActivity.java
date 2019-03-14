@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,9 +26,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     @BindView(R.id.activity_chat_status) TextView state;
     @BindView(R.id.activity_chat_messages) TextView messages;
     @BindView(R.id.activity_chat_hello_world) Button helloWorld;
-    private String textstr;
     public byte[] Textbyte;
-    EditText hexText;
 
     @Inject ChatPresenter presenter;
 
@@ -50,8 +47,6 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
 
     @OnClick(R.id.activity_chat_hello_world)
     public void onHelloWorld(){
-//        textstr = hexText.getText().toString();
-//        Textbyte = textstr.getBytes();
         presenter.onHelloWorld(Textbyte);
     }
 

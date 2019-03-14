@@ -1,9 +1,9 @@
 package me.aflak.bluetooth;
 
 public interface ParserCallback {
-    void givsLenhgt (int lenght);
-    void givsRequest (boolean request);
-    void givsChannel (char channel);
-    void givsRegister (int register);
-    void givsCorrectAcceptance (boolean correct_acceptence);
+    void givsLenhgt (Integer lenght);
+    void givsRequest (Boolean request);
+    void givsChannel (int channel);
+    void givsRegister (Integer register);
+    void givsCorrectAcceptance (Boolean correct_acceptence);
 }

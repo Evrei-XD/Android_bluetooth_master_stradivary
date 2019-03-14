@@ -3,11 +3,10 @@ package me.aflak.libraries.ui.chat.interactor;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 
-import java.io.IOException;
-
 import me.aflak.bluetooth.Bluetooth;
 import me.aflak.bluetooth.BluetoothCallback;
 import me.aflak.bluetooth.DeviceCallback;
+import me.aflak.bluetooth.ParserCallback;
 
 
 public class ChatInteractorImpl implements ChatInteractor {
@@ -31,6 +30,11 @@ public class ChatInteractorImpl implements ChatInteractor {
     public void connectToDevice(BluetoothDevice device, DeviceCallback callback) {
         bluetooth.setDeviceCallback(callback);
         bluetooth.connectToDevice(device);
+    }
+
+    @Override
+    public void parsingExperimental(ParserCallback parser) {
+        bluetooth.enableParsing(parser);
     }
 
     @Override
