@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.UUID;
 
 public class Bluetooth {
     private static final int REQUEST_ENABLE_BT = 1111;
+    public TextView CH1;
 
     private Activity activity;
     private Context context;
@@ -35,6 +37,7 @@ public class Bluetooth {
     private BluetoothSocket socket;
     private BluetoothDevice device, devicePair;
     private BufferedReader input;
+    private InputStreamReader in;
     private OutputStream out;
 
     private DeviceCallback deviceCallback;
@@ -308,17 +311,20 @@ public class Bluetooth {
         private int summator = 0;     //для проверки суммы первых символов МТ и последнего $
         private int msgLenght = 0;    //для свапа младших и старших байт длинны данных
         private int msgRegtster = 0;  //для свапа младших и старших байт номера регистра
-        private byte lowByte = 0;     //для записи младшего байта при перемене младших и старших байт
+        private int msgChannel = 0;   //для номера канала
+        private int msgLevelCH = 0;
+        private int lowByte = 0;     //для записи младшего байта при перемене младших и старших байт
         private int i=1;
-        private boolean request = true;                //true-приём false-передача
-        public boolean no_error = true;                //true-нет ошибок false-ошибка парсинга
-        private boolean msgCorrectAcceptance = true;   //true-контрольная сумма+ false-контрольная сумма-
+        private boolean request = true;                //true-ответ false-запрос
+        public boolean no_error = true;                //true-нет ошибок false-есть ошибки
+        private boolean msgCorrectAcceptance = true;   //true-безошиобочная CRC false-шибочная CRC
         private StringBuffer msgstr = new StringBuffer();
+        private byte[] txtbyteout = {0x01, 0x02, 0x03} ;
         public void run(){
             try {
                 while((msg = input.read()) != -1) //((System.in).read(msg)) //((System.in).read(msg))   //((input.read())) != -1
                 {
-
+                    System.out.println("Принята посылка :)" + msg);
                     if((i == 1)||(i == 2)||((i == (8+msgLenght)))){
                         summator += msg;
                         if (summator == 197){
@@ -340,11 +346,11 @@ public class Bluetooth {
                     }
 
                     if(i == 3){
-                        lowByte = (byte) msg;
+                        lowByte = msg;
                     }
                     if(i == 4){
                         msgLenght = (msg << 8) + lowByte; //msgLenght содержит количество байт данных в посылке
-                        System.out.println("длина даных:"+msgLenght);
+                        System.out.println("линна строки:"+msgLenght);
                     }
                     if(i == 5){
                         if(msg == 1){
@@ -354,10 +360,10 @@ public class Bluetooth {
                         }
                     }
                     if(i == 6){
-                        lowByte = (byte) msg;
+                        lowByte = msg;
                     }
                     if(i == 7){
-                        msgRegtster = (msg << 8) + lowByte; //msgRegtster содержит номер регистра
+                        msgRegtster = (msg << 8) + lowByte;  //msgRegtster содержит номер регистра
                         System.out.println("номер регистра:"+msgRegtster);
                     }
                     if((i >= 8)&&(i <=(msgLenght+7))){
@@ -365,6 +371,21 @@ public class Bluetooth {
                             System.out.println("Пришла лажа :((");
                             no_error = false;
                         } else {
+                            if(i == 8){
+                                lowByte = msg;
+                            }
+                            if(i == 9){
+                                msgChannel = (msg << 8) + lowByte;
+                                System.out.println("номер канала:"+msgChannel);
+                            }
+                            System.out.println("считывание данных:" + msg);
+                            if(i == 10){
+                                lowByte = msg;
+                            }
+                            if(i == 11){
+                                msgLevelCH = (msg << 8) + lowByte; //msgRegtster ???????? ????? ????????
+                                System.out.println("уровень CH1:"+msgLevelCH);
+                            }
                             System.out.println("считывание данных:" + msg);
                         }
                     }
@@ -373,10 +394,10 @@ public class Bluetooth {
                         msgstr.append((char)msg);
                     }
                     if(i == (9+msgLenght)) {
-                        System.out.println("lenght:"+msgstr.length()+" ОБНУЛЕНИЕ i="+i);
+                        //System.out.println("lenght:"+msgstr.length()+" ОБНУЛЕНИЕ i="+i);
                     }
                     if(i > (msgLenght+9)){
-                        System.out.println("------> i=" +i+" msgLenght="+msgLenght);
+                        //System.out.println("------> i=" +i+" msgLenght="+msgLenght);
                         msgstr.setLength(0);
                         no_error = true;
                         msgLenght = 0;
@@ -389,14 +410,18 @@ public class Bluetooth {
                         final Integer msgLenghtf = msgLenght;
                         final Boolean requestf = request;
                         final Integer msgRegtsterf = msgRegtster;
+                        final Integer msgChannelf = msgChannel;
+                        final Integer msgLevelCHf = msgLevelCH;
                         final Boolean msgCorrectAcceptancef = msgCorrectAcceptance;
                         ThreadHelper.run(runOnUi, activity, new Runnable() {
                             @Override
                             public void run() {
                                 if(no_error && msgCorrectAcceptance) {
                                     parserCallback.givsLenhgt(msgLenghtf);
+                                    parserCallback.givsChannel(msgChannelf);
                                     parserCallback.givsRequest(requestf);
                                     parserCallback.givsRegister(msgRegtsterf);
+                                    parserCallback.givsLevelCH(msgLevelCHf);
                                     deviceCallback.onMessage(msgCopy);
                                     System.out.println("сделал цикл:"+ msgCopy);
                                 }
@@ -449,7 +474,8 @@ public class Bluetooth {
             try {
                 socket.connect();
                 out = socket.getOutputStream();
-                input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                input = new BufferedReader(new InputStreamReader(socket.getInputStream(), "ISO-8859-1"));
+                in = new InputStreamReader(socket.getInputStream());
                 connected=true;
 
                 new ReceiveThread().start();

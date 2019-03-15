@@ -68,13 +68,24 @@ public class ChatPresenterImpl implements ChatPresenter {
         }
     }
 
-    private ParserCallback parserCallback = new ParserCallback(){
+    @Override
+    public void sendData(int data) {
+        Integer integer = new Integer(data);
+        interactor.sendMessagestr(String.valueOf(integer));
+    }
+
+
+    public ParserCallback parserCallback = new ParserCallback(){
+
+        //public TextView CH1;
 
         @Override
-        public void givsLenhgt(Integer lenght) {
+        public Integer givsLenhgt(int lenght) {
             Integer integer =  new Integer(lenght);
             System.out.println("принятая длинна:"+integer);
+            return integer;
         }
+
 
         @Override
         public void givsRequest(Boolean request) {
@@ -86,6 +97,13 @@ public class ChatPresenterImpl implements ChatPresenter {
         public void givsChannel(int channel) {
             Integer charr = new Integer(channel);
             System.out.println("принятая длинна:"+charr);
+        }
+
+        @Override
+        public void givsLevelCH(int levelCH) {
+            Integer charr = new Integer(levelCH);
+            view.setValueCH1(levelCH);
+            System.out.println("принятый уровень CH:"+charr);
         }
 
         @Override
