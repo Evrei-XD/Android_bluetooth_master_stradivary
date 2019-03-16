@@ -25,10 +25,12 @@ import me.aflak.libraries.ui.chat.presenter.ChatPresenter;
 
 public class ChatActivity extends AppCompatActivity implements ChatView{
     @BindView(R.id.activity_chat_status) TextView state;
-    @BindView(R.id.seekBar) SeekBar seekBarCH1on;
-    @BindView(R.id.seekBar2) SeekBar seekBarCH1off;
+    @BindView(R.id.seekBarCH1on) SeekBar seekBarCH1on;
+    @BindView(R.id.seekBarCH1off) SeekBar seekBarCH1off;
+    @BindView(R.id.seekBarCH1sleep) SeekBar seekBarCH1sleep;
     @BindView(R.id.valueCH1on) TextView valueCH1on;
     @BindView(R.id.valueCH1off) TextView valueCH1off;
+    @BindView(R.id.valueCH1sleep) TextView valueCH1sleep;
     @BindView(R.id.activity_chat_messages) TextView messages;
     @BindView(R.id.valueCH1) TextView valueCH1;
     @BindView(R.id.activity_chat_hello_world) Button helloWorld;
@@ -60,11 +62,13 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 valueCH1on.setText(String.valueOf(seekBar.getProgress()));
+                presenter.onHelloWorld(Textbyte);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH1on.setText(String.valueOf(seekBar.getProgress()));
+                presenter.onHelloWorld(Textbyte);
             }
         });
 
@@ -78,11 +82,32 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 valueCH1off.setText(String.valueOf(seekBar.getProgress()));
+                presenter.onHelloWorld(Textbyte);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH1off.setText(String.valueOf(seekBar.getProgress()));
+                presenter.onHelloWorld(Textbyte);
+            }
+        });
+
+        seekBarCH1sleep.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                valueCH1sleep.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                valueCH1sleep.setText(String.valueOf(seekBar.getProgress()));
+                presenter.onHelloWorld(Textbyte);
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                valueCH1sleep.setText(String.valueOf(seekBar.getProgress()));
+                presenter.onHelloWorld(Textbyte);
             }
         });
     }

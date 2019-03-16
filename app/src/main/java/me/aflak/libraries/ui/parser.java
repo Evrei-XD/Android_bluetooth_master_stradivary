@@ -9,6 +9,18 @@ class Parser implements ParserCallback {
         integer = len;
     }
 
+    private int SwopByte(int twoByte){
+        int test =  twoByte;
+//        txtbyteout[0] = (byte) test;
+//        txtbyteout[1] = (byte) (test >> 8);
+        test = (((byte) test) << 16)+test;
+        test = test >> 8;
+//        System.out.println("старший байт:"+txtbyteout[0]);
+//        System.out.println("младший байт:"+txtbyteout[1]);
+        System.out.println("свап в инте байт:"+test);
+        return test;
+    }
+
     @Override
     public Integer givsLenhgt(int lenght) {
         Integer integer =  new Integer(lenght);

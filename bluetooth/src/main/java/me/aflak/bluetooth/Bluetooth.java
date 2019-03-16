@@ -307,6 +307,7 @@ public class Bluetooth {
     }
 
     private class ReceiveThread extends Thread implements Runnable{
+        private int test = 2928;
         private int msg = 65;
         private int summator = 0;     //для проверки суммы первых символов МТ и последнего $
         private int msgLenght = 0;    //для свапа младших и старших байт длинны данных
@@ -319,7 +320,7 @@ public class Bluetooth {
         public boolean no_error = true;                //true-нет ошибок false-есть ошибки
         private boolean msgCorrectAcceptance = true;   //true-безошиобочная CRC false-шибочная CRC
         private StringBuffer msgstr = new StringBuffer();
-        private byte[] txtbyteout = {0x01, 0x02, 0x03} ;
+        private byte[] txtbyteout = {0x01, 0x02} ;
         public void run(){
             try {
                 while((msg = input.read()) != -1) //((System.in).read(msg)) //((System.in).read(msg))   //((input.read())) != -1
