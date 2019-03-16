@@ -16,7 +16,7 @@ public class ChatPresenterImpl implements ChatPresenter {
     private ChatView view;
     private ChatInteractor interactor;
     private BluetoothDevice device;
-    private byte aByte[] = {0x4D, 0x54, 0x01, 0x00, 0x00, 0x03, 0x00, 0x01, 0x24} ;
+    private byte aByte[] = {0x4D, 0x54, 0x01, 0x00, 0x00, 0x02, 0x00, 0x01, 0x24} ;
     private byte txtbyteout[] = {0x00, 0x00} ;
 
     public ChatPresenterImpl(ChatView view, ChatInteractor interactor) {
@@ -96,7 +96,7 @@ public class ChatPresenterImpl implements ChatPresenter {
         @Override
         public void givsChannel(int channel) {
             Integer charr = new Integer(channel);
-            System.out.println("принятая длинна:"+charr);
+            System.out.println("номер канала:"+charr);
         }
 
         @Override

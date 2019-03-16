@@ -324,7 +324,6 @@ public class Bluetooth {
             try {
                 while((msg = input.read()) != -1) //((System.in).read(msg)) //((System.in).read(msg))   //((input.read())) != -1
                 {
-                    System.out.println("Принята посылка :)" + msg);
                     if((i == 1)||(i == 2)||((i == (8+msgLenght)))){
                         summator += msg;
                         if (summator == 197){
@@ -367,6 +366,7 @@ public class Bluetooth {
                         System.out.println("номер регистра:"+msgRegtster);
                     }
                     if((i >= 8)&&(i <=(msgLenght+7))){
+                        System.out.println("считывание данных:" + msg);
                         if(msg == 36){
                             System.out.println("Пришла лажа :((");
                             no_error = false;
@@ -378,15 +378,21 @@ public class Bluetooth {
                                 msgChannel = (msg << 8) + lowByte;
                                 System.out.println("номер канала:"+msgChannel);
                             }
-                            System.out.println("считывание данных:" + msg);
-                            if(i == 10){
-                                lowByte = msg;
+                            switch (msgChannel){
+                                case 1:
+                                    if(i == 10){
+                                        lowByte = msg;
+                                    }
+                                    if(i == 11){
+                                        msgLevelCH = (msg << 8) + lowByte; //msgLevelCH уровень канала 1
+                                        System.out.println("уровень CH1:"+msgLevelCH);
+                                    }
+                                    break;
+                                case 2:
+                                    break;
+                                default:
+                                    break;
                             }
-                            if(i == 11){
-                                msgLevelCH = (msg << 8) + lowByte; //msgRegtster ???????? ????? ????????
-                                System.out.println("уровень CH1:"+msgLevelCH);
-                            }
-                            System.out.println("считывание данных:" + msg);
                         }
                     }
                     if(no_error) {
