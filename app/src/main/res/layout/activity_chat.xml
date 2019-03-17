@@ -170,7 +170,7 @@
         android:layout_marginStart="114dp"
         android:layout_marginLeft="114dp"
         android:layout_marginTop="71dp"
-        android:text="@string/mv" />
+        android:text="ms" />
 
     <TextView
         android:id="@+id/valueCH1"

@@ -34,9 +34,12 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     @BindView(R.id.activity_chat_messages) TextView messages;
     @BindView(R.id.valueCH1) TextView valueCH1;
     @BindView(R.id.activity_chat_hello_world) Button helloWorld;
-    private int intValueCH1off;
-    private int intValueCH1on;
-    public byte[] Textbyte;
+    private int intValueCH1on = 2500;
+    private int intValueCH1off = 100;
+    private  int intValueCH1sleep = 200;
+    private byte indicatorTypeMessage;
+    private byte numberChannel;
+    public byte[] Textbyte = new byte[8];
 
     @Inject ChatPresenter presenter;
 
@@ -52,6 +55,13 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
 
         ButterKnife.bind(this);
 
+        Textbyte[2] = (byte) intValueCH1on;
+        Textbyte[3] = (byte) (intValueCH1on >> 8);
+        Textbyte[4] = (byte) intValueCH1off;
+        Textbyte[5] = (byte) (intValueCH1off >> 8);
+        Textbyte[6] = (byte) intValueCH1sleep;
+        Textbyte[7] = (byte) (intValueCH1sleep >> 8);
+
         presenter.onCreate(getIntent());
         seekBarCH1on.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -62,12 +72,18 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 valueCH1on.setText(String.valueOf(seekBar.getProgress()));
-                presenter.onHelloWorld(Textbyte);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH1on.setText(String.valueOf(seekBar.getProgress()));
+                intValueCH1on = seekBarCH1on.getProgress();
+                indicatorTypeMessage = 0x01;
+                numberChannel = 0x01;
+                Textbyte[0] = indicatorTypeMessage;
+                Textbyte[1] = numberChannel;
+                Textbyte[2] = (byte) intValueCH1on;
+                Textbyte[3] = (byte) (intValueCH1on >> 8);
                 presenter.onHelloWorld(Textbyte);
             }
         });
@@ -82,12 +98,18 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 valueCH1off.setText(String.valueOf(seekBar.getProgress()));
-                presenter.onHelloWorld(Textbyte);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH1off.setText(String.valueOf(seekBar.getProgress()));
+                intValueCH1off = seekBarCH1off.getProgress();
+                indicatorTypeMessage = 0x01;
+                numberChannel = 0x01;
+                Textbyte[0] = indicatorTypeMessage;
+                Textbyte[1] = numberChannel;
+                Textbyte[4] = (byte) intValueCH1off;
+                Textbyte[5] = (byte) (intValueCH1off >> 8);
                 presenter.onHelloWorld(Textbyte);
             }
         });
@@ -101,12 +123,18 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 valueCH1sleep.setText(String.valueOf(seekBar.getProgress()));
-                presenter.onHelloWorld(Textbyte);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH1sleep.setText(String.valueOf(seekBar.getProgress()));
+                intValueCH1sleep = seekBarCH1sleep.getProgress();
+                indicatorTypeMessage = 0x01;
+                numberChannel = 0x01;
+                Textbyte[0] = indicatorTypeMessage;
+                Textbyte[1] = numberChannel;
+                Textbyte[6] = (byte) intValueCH1sleep;
+                Textbyte[7] = (byte) (intValueCH1sleep >> 8);
                 presenter.onHelloWorld(Textbyte);
             }
         });

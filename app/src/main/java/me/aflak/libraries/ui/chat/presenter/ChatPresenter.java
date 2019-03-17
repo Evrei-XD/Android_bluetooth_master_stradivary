@@ -7,7 +7,7 @@ import android.content.Intent;
 public interface ChatPresenter {
     void onCreate(Intent intent);
     void onHelloWorld(byte[] textbyte);
-    void sendData(int data);
+    void sendData(byte[] data);
     void onStart(Activity activity);
     void onStop();
 }
