@@ -28,18 +28,25 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     @BindView(R.id.seekBarCH1on) SeekBar seekBarCH1on;
     @BindView(R.id.seekBarCH1off) SeekBar seekBarCH1off;
     @BindView(R.id.seekBarCH1sleep) SeekBar seekBarCH1sleep;
+    @BindView(R.id.seekBarCH2on) SeekBar seekBarCH2on;
+    @BindView(R.id.seekBarCH2off) SeekBar seekBarCH2off;
+    @BindView(R.id.seekBarCH2sleep) SeekBar seekBarCH2sleep;
     @BindView(R.id.valueCH1on) TextView valueCH1on;
     @BindView(R.id.valueCH1off) TextView valueCH1off;
     @BindView(R.id.valueCH1sleep) TextView valueCH1sleep;
+    @BindView(R.id.valueCH2on) TextView valueCH2on;
+    @BindView(R.id.valueCH2off) TextView valueCH2off;
+    @BindView(R.id.valueCH2sleep) TextView valueCH2sleep;
     @BindView(R.id.activity_chat_messages) TextView messages;
     @BindView(R.id.valueCH1) TextView valueCH1;
     @BindView(R.id.activity_chat_hello_world) Button helloWorld;
-    private int intValueCH1on = 2500;
-    private int intValueCH1off = 100;
-    private  int intValueCH1sleep = 200;
+    @BindView(R.id.activity_chat_hello_world2) Button helloWorld2;
+    private int intValueCHon = 2500;
+    private int intValueCHoff = 100;
+    private int intValueCHsleep = 200;
     private byte indicatorTypeMessage;
     private byte numberChannel;
-    public byte[] Textbyte = new byte[8];
+    public byte[] TextByteTreeg = new byte[8];
 
     @Inject ChatPresenter presenter;
 
@@ -55,12 +62,12 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
 
         ButterKnife.bind(this);
 
-        Textbyte[2] = (byte) intValueCH1on;
-        Textbyte[3] = (byte) (intValueCH1on >> 8);
-        Textbyte[4] = (byte) intValueCH1off;
-        Textbyte[5] = (byte) (intValueCH1off >> 8);
-        Textbyte[6] = (byte) intValueCH1sleep;
-        Textbyte[7] = (byte) (intValueCH1sleep >> 8);
+        TextByteTreeg[2] = (byte) intValueCHon;
+        TextByteTreeg[3] = (byte) (intValueCHon >> 8);
+        TextByteTreeg[4] = (byte) intValueCHoff;
+        TextByteTreeg[5] = (byte) (intValueCHoff >> 8);
+        TextByteTreeg[6] = (byte) intValueCHsleep;
+        TextByteTreeg[7] = (byte) (intValueCHsleep >> 8);
 
         presenter.onCreate(getIntent());
         seekBarCH1on.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -77,21 +84,21 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH1on.setText(String.valueOf(seekBar.getProgress()));
-                intValueCH1on = seekBarCH1on.getProgress();
+                intValueCHon = seekBarCH1on.getProgress();
                 indicatorTypeMessage = 0x01;
                 numberChannel = 0x01;
-                Textbyte[0] = indicatorTypeMessage;
-                Textbyte[1] = numberChannel;
-                Textbyte[2] = (byte) intValueCH1on;
-                Textbyte[3] = (byte) (intValueCH1on >> 8);
-                presenter.onHelloWorld(Textbyte);
+                TextByteTreeg[0] = indicatorTypeMessage;
+                TextByteTreeg[1] = numberChannel;
+                TextByteTreeg[2] = (byte) intValueCHon;
+                TextByteTreeg[3] = (byte) (intValueCHon >> 8);
+                presenter.onHelloWorld(TextByteTreeg);
             }
         });
 
         seekBarCH1off.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                intValueCH1off = seekBar.getProgress();
+                intValueCHoff = seekBar.getProgress();
                 valueCH1off.setText(String.valueOf(seekBar.getProgress()));
             }
 
@@ -103,14 +110,14 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH1off.setText(String.valueOf(seekBar.getProgress()));
-                intValueCH1off = seekBarCH1off.getProgress();
+                intValueCHoff = seekBarCH1off.getProgress();
                 indicatorTypeMessage = 0x01;
                 numberChannel = 0x01;
-                Textbyte[0] = indicatorTypeMessage;
-                Textbyte[1] = numberChannel;
-                Textbyte[4] = (byte) intValueCH1off;
-                Textbyte[5] = (byte) (intValueCH1off >> 8);
-                presenter.onHelloWorld(Textbyte);
+                TextByteTreeg[0] = indicatorTypeMessage;
+                TextByteTreeg[1] = numberChannel;
+                TextByteTreeg[4] = (byte) intValueCHoff;
+                TextByteTreeg[5] = (byte) (intValueCHoff >> 8);
+                presenter.onHelloWorld(TextByteTreeg);
             }
         });
 
@@ -128,14 +135,89 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH1sleep.setText(String.valueOf(seekBar.getProgress()));
-                intValueCH1sleep = seekBarCH1sleep.getProgress();
+                intValueCHsleep = seekBarCH1sleep.getProgress();
                 indicatorTypeMessage = 0x01;
                 numberChannel = 0x01;
-                Textbyte[0] = indicatorTypeMessage;
-                Textbyte[1] = numberChannel;
-                Textbyte[6] = (byte) intValueCH1sleep;
-                Textbyte[7] = (byte) (intValueCH1sleep >> 8);
-                presenter.onHelloWorld(Textbyte);
+                TextByteTreeg[0] = indicatorTypeMessage;
+                TextByteTreeg[1] = numberChannel;
+                TextByteTreeg[6] = (byte) intValueCHsleep;
+                TextByteTreeg[7] = (byte) (intValueCHsleep >> 8);
+                presenter.onHelloWorld(TextByteTreeg);
+            }
+        });
+
+        seekBarCH2on.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                valueCH2on.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                valueCH2on.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                valueCH2on.setText(String.valueOf(seekBar.getProgress()));
+                intValueCHon = seekBarCH2on.getProgress();
+                indicatorTypeMessage = 0x01;
+                numberChannel = 0x02;
+                TextByteTreeg[0] = indicatorTypeMessage;
+                TextByteTreeg[1] = numberChannel;
+                TextByteTreeg[2] = (byte) intValueCHon;
+                TextByteTreeg[3] = (byte) (intValueCHon >> 8);
+                presenter.onHelloWorld(TextByteTreeg);
+            }
+        });
+
+        seekBarCH2off.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                valueCH2off.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                valueCH2off.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                valueCH2off.setText(String.valueOf(seekBar.getProgress()));
+                intValueCHoff = seekBarCH2off.getProgress();
+                indicatorTypeMessage = 0x01;
+                numberChannel = 0x02;
+                TextByteTreeg[0] = indicatorTypeMessage;
+                TextByteTreeg[1] = numberChannel;
+                TextByteTreeg[4] = (byte) intValueCHoff;
+                TextByteTreeg[5] = (byte) (intValueCHoff >> 8);
+                presenter.onHelloWorld(TextByteTreeg);
+            }
+        });
+
+        seekBarCH2sleep.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                valueCH2sleep.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                valueCH2sleep.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                valueCH2sleep.setText(String.valueOf(seekBar.getProgress()));
+                intValueCHsleep = seekBarCH2sleep.getProgress();
+                indicatorTypeMessage = 0x01;
+                numberChannel = 0x02;
+                TextByteTreeg[0] = indicatorTypeMessage;
+                TextByteTreeg[1] = numberChannel;
+                TextByteTreeg[2] = (byte) intValueCHsleep;
+                TextByteTreeg[3] = (byte) (intValueCHsleep >> 8);
+                presenter.onHelloWorld(TextByteTreeg);
             }
         });
     }
@@ -143,8 +225,14 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     @OnClick(R.id.activity_chat_hello_world)
     public void onHelloWorld(){
 //        presenter.sendData(intValueCH1off);
-        presenter.onHelloWorld(Textbyte);
+        presenter.onHelloWorld(TextByteTreeg);
     }
+
+//    @OnClick(R.id.activity_chat_hello_world2)
+//    public void onHelloWorld(){
+////        presenter.sendData(intValueCH1off);
+//        presenter.onHelloWorld(TextByteTreeg);
+//    }
 
     @Override
     public void setStatus(String status) {
@@ -171,9 +259,13 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     @Override
     public void enableHWButton(boolean enabled) {
         helloWorld.setEnabled(enabled);
+        helloWorld2.setEnabled(enabled);
         seekBarCH1on.setEnabled(enabled);
         seekBarCH1off.setEnabled(enabled);
         seekBarCH1sleep.setEnabled(enabled);
+        seekBarCH2on.setEnabled(enabled);
+        seekBarCH2off.setEnabled(enabled);
+        seekBarCH2sleep.setEnabled(enabled);
     }
 
     @Override

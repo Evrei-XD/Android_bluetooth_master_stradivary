@@ -69,12 +69,42 @@
         android:scrollbars="vertical"
         android:textSize="18sp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:background="@android:color/darker_gray" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="115dp"
+        android:background="@android:color/darker_gray" />
+
     <Button
         android:id="@+id/activity_chat_hello_world"
-        android:layout_width="match_parent"
+        android:layout_width="203dp"
         android:layout_height="wrap_content"
-        android:text="@string/helloWorld"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="192dp"
+        android:layout_marginRight="192dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/helloWorld" />
+
+    <Button
+        android:id="@+id/activity_chat_hello_world2"
+        android:layout_width="208dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="187dp"
+        android:layout_marginLeft="187dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/helloWorld2" />
 
     <TextView
         android:id="@+id/textView"
@@ -97,8 +127,8 @@
         android:layout_alignLeft="@+id/activity_chat_status"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="109dp"
-        android:text="@string/ch1" />
+        android:layout_marginTop="93dp"
+        android:text="CH2:" />
 
     <TextView
         android:id="@+id/textView2"
@@ -119,10 +149,10 @@
         android:layout_below="@+id/activity_chat_status"
         android:layout_alignStart="@+id/activity_chat_status"
         android:layout_alignLeft="@+id/activity_chat_status"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="134dp"
-        android:text="@string/ch1_on" />
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="116dp"
+        android:text="CH2 on:" />
 
     <TextView
         android:id="@+id/textView5"
@@ -137,6 +167,18 @@
         android:text="@string/ch1_off" />
 
     <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="139dp"
+        android:text="CH2 off:" />
+
+    <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -147,6 +189,18 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="71dp"
         android:text="CH1 sleep:" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="162dp"
+        android:text="CH2 sleep:" />
 
     <TextView
         android:id="@+id/textView3"
@@ -181,6 +235,42 @@
         android:layout_alignLeft="@+id/activity_chat_status"
         android:layout_marginStart="114dp"
         android:layout_marginLeft="114dp"
+        android:layout_marginTop="93dp"
+        android:text="@string/mv" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_marginStart="114dp"
+        android:layout_marginLeft="114dp"
+        android:layout_marginTop="116dp"
+        android:text="@string/mv" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_marginStart="114dp"
+        android:layout_marginLeft="114dp"
+        android:layout_marginTop="139dp"
+        android:text="@string/mv" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_marginStart="114dp"
+        android:layout_marginLeft="114dp"
         android:layout_marginTop="48dp"
         android:text="@string/mv" />
 
@@ -194,6 +284,18 @@
         android:layout_marginStart="114dp"
         android:layout_marginLeft="114dp"
         android:layout_marginTop="71dp"
+        android:text="ms" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_marginStart="114dp"
+        android:layout_marginLeft="114dp"
+        android:layout_marginTop="162dp"
         android:text="ms" />
 
     <TextView
@@ -250,6 +352,23 @@
         android:progress="2500" />
 
     <SeekBar
+        android:id="@+id/seekBarCH2on"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_alignEnd="@+id/activity_chat_status"
+        android:layout_alignRight="@+id/activity_chat_status"
+        android:layout_marginStart="139dp"
+        android:layout_marginLeft="139dp"
+        android:layout_marginTop="117dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:max="2500"
+        android:progress="2500" />
+
+    <SeekBar
         android:id="@+id/seekBarCH1off"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
@@ -261,6 +380,23 @@
         android:layout_marginStart="139dp"
         android:layout_marginLeft="139dp"
         android:layout_marginTop="48dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:max="2500"
+        android:progress="100" />
+
+    <SeekBar
+        android:id="@+id/seekBarCH2off"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_alignEnd="@+id/activity_chat_status"
+        android:layout_alignRight="@+id/activity_chat_status"
+        android:layout_marginStart="139dp"
+        android:layout_marginLeft="139dp"
+        android:layout_marginTop="139dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
         android:max="2500"
@@ -283,80 +419,92 @@
         android:max="500"
         android:progress="200" />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="395dp"
-        android:layout_height="130dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="180dp"
-        android:layout_marginBottom="405dp" />
+    <SeekBar
+        android:id="@+id/seekBarCH2sleep"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_alignEnd="@+id/activity_chat_status"
+        android:layout_alignRight="@+id/activity_chat_status"
+        android:layout_marginStart="139dp"
+        android:layout_marginLeft="139dp"
+        android:layout_marginTop="162dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:max="500"
+        android:progress="200" />
 
-    <LinearLayout
-        android:layout_width="395dp"
-        android:layout_height="197dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="293dp"
-        android:layout_marginBottom="225dp"
-        android:orientation="vertical">
+    <TextView
+        android:id="@+id/valueCH2"
+        android:layout_width="42dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
+        android:layout_marginStart="69dp"
+        android:layout_marginLeft="69dp"
+        android:layout_marginTop="93dp"
+        android:text="@string/_1250"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:fontFamily="sans-serif-medium" />
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="phone" />
+    <TextView
+        android:id="@+id/valueCH2on"
+        android:layout_width="42dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
+        android:layout_marginStart="69dp"
+        android:layout_marginLeft="69dp"
+        android:layout_marginTop="116dp"
+        android:text="2500"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:fontFamily="sans-serif-medium" />
 
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="phone" />
+    <TextView
+        android:id="@+id/valueCH2off"
+        android:layout_width="42dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginTop="139dp"
+        android:text="100"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:fontFamily="sans-serif-medium" />
 
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine" />
-
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="time" />
-
-        <EditText
-            android:id="@+id/editText5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date" />
-
-        <EditText
-            android:id="@+id/editText6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="phone" />
-
-        <EditText
-            android:id="@+id/editText7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="phone" />
-
-        <EditText
-            android:id="@+id/editText8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="phone" />
-    </LinearLayout>
-
-    /////////////////////////////////////////////
-
+    <TextView
+        android:id="@+id/valueCH2sleep"
+        android:layout_width="42dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_chat_status"
+        android:layout_alignStart="@+id/activity_chat_status"
+        android:layout_alignLeft="@+id/activity_chat_status"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginTop="162dp"
+        android:text="200"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:fontFamily="sans-serif-medium" />
 </RelativeLayout>
