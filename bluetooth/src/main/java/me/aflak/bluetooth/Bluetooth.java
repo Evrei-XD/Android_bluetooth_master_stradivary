@@ -48,8 +48,6 @@ public class Bluetooth {
 
     private boolean runOnUi;
 
-    private byte aByte[] = {0x4D, 0x54, 0x00, 0x00, 0x00, 0x06, 0x00, 0x25, 0x24};
-
     public Bluetooth(Context context){
         initialize(context, UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"));
     }
@@ -329,11 +327,11 @@ public class Bluetooth {
                         summator += msg;
                         if (summator == 197){
                             msgCorrectAcceptance = true;
-                            System.out.println("Принята посылка :)");
+                            System.out.println("<-- Принята посылка :)");
                         } else {
                             if(((i == (8+msgLenght))&&(msg != 36))||((i == 1)&&(msg != 77))||((i == 2)&&(msg != 84))){
-                                System.out.println("Пришла лажа :(");
-                                System.out.println("summator:"+summator);
+                                System.out.println("<-- Пришла лажа :(");
+                                System.out.println("<-- summator:"+summator);
                                 no_error = false;
                                 msgstr.setLength(0);
                                 msgLenght = 0;
@@ -350,7 +348,7 @@ public class Bluetooth {
                     }
                     if(i == 4){
                         msgLenght = (msg << 8) + lowByte; //msgLenght содержит количество байт данных в посылке
-                        System.out.println("длина строки:"+msgLenght);
+                        System.out.println("<-- длина строки:"+msgLenght);
                     }
                     if(i == 5){
                         if(msg == 1){
@@ -364,12 +362,12 @@ public class Bluetooth {
                     }
                     if(i == 7){
                         msgRegtster = (msg << 8) + lowByte;  //msgRegtster содержит номер регистра
-                        System.out.println("номер регистра:"+msgRegtster);
+                        System.out.println("<-- номер регистра:"+msgRegtster);
                     }
                     if((i >= 8)&&(i <=(msgLenght+7))){
-                        System.out.println("считывание данных:" + msg);
+                        System.out.println("<-- считывание данных:" + msg);
                         if(msg == 36){
-                            System.out.println("Пришла лажа :((");
+                            System.out.println("<-- Пришла лажа :((");
                             no_error = false;
                         } else {
                             if(i == 8){
@@ -377,7 +375,7 @@ public class Bluetooth {
                             }
                             if(i == 9){
                                 msgChannel = (msg << 8) + lowByte;
-                                System.out.println("номер канала:"+msgChannel);
+                                System.out.println("<-- номер канала:"+msgChannel);
                             }
                             switch (msgChannel){
                                 case 1:
@@ -386,10 +384,17 @@ public class Bluetooth {
                                     }
                                     if(i == 11){
                                         msgLevelCH = (msg << 8) + lowByte; //msgLevelCH уровень канала 1
-                                        System.out.println("уровень CH1:"+msgLevelCH);
+                                        System.out.println("<-- уровень CH1:"+msgLevelCH);
                                     }
                                     break;
                                 case 2:
+                                    if(i == 10){
+                                        lowByte = msg;
+                                    }
+                                    if(i == 11){
+                                        msgLevelCH = (msg << 8) + lowByte; //msgLevelCH уровень канала 1
+                                        System.out.println("<-- уровень CH1:"+msgLevelCH);
+                                    }
                                     break;
                                 default:
                                     break;
@@ -428,9 +433,9 @@ public class Bluetooth {
                                     parserCallback.givsChannel(msgChannelf);
                                     parserCallback.givsRequest(requestf);
                                     parserCallback.givsRegister(msgRegtsterf);
-                                    parserCallback.givsLevelCH(msgLevelCHf);
+                                    parserCallback.givsLevelCH(msgLevelCHf, msgChannelf);
                                     deviceCallback.onMessage(msgCopy);
-                                    System.out.println("сделал цикл:"+ msgCopy);
+                                    System.out.println("<-- сделал цикл:"+ msgCopy);
                                 }
                                 parserCallback.givsCorrectAcceptance(msgCorrectAcceptancef);
                                 msgstr.setLength(0);

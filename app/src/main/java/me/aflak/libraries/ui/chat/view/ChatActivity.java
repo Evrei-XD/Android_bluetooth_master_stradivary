@@ -3,6 +3,7 @@ package me.aflak.libraries.ui.chat.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -39,11 +40,15 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     @BindView(R.id.valueCH2sleep) TextView valueCH2sleep;
     @BindView(R.id.activity_chat_messages) TextView messages;
     @BindView(R.id.valueCH1) TextView valueCH1;
+    @BindView(R.id.valueCH2) TextView valueCH2;
     @BindView(R.id.activity_chat_hello_world) Button helloWorld;
     @BindView(R.id.activity_chat_hello_world2) Button helloWorld2;
-    private int intValueCHon = 2500;
-    private int intValueCHoff = 100;
-    private int intValueCHsleep = 200;
+    private int intValueCH1on = 2500;
+    private int intValueCH1off = 100;
+    private int intValueCH1sleep = 200;
+    private int intValueCH2on = 2500;
+    private int intValueCH2off = 100;
+    private int intValueCH2sleep = 200;
     private byte indicatorTypeMessage;
     private byte numberChannel;
     public byte[] TextByteTreeg = new byte[8];
@@ -62,12 +67,12 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
 
         ButterKnife.bind(this);
 
-        TextByteTreeg[2] = (byte) intValueCHon;
-        TextByteTreeg[3] = (byte) (intValueCHon >> 8);
-        TextByteTreeg[4] = (byte) intValueCHoff;
-        TextByteTreeg[5] = (byte) (intValueCHoff >> 8);
-        TextByteTreeg[6] = (byte) intValueCHsleep;
-        TextByteTreeg[7] = (byte) (intValueCHsleep >> 8);
+        TextByteTreeg[2] = (byte) intValueCH1on;
+        TextByteTreeg[3] = (byte) (intValueCH1on >> 8);
+        TextByteTreeg[4] = (byte) intValueCH1off;
+        TextByteTreeg[5] = (byte) (intValueCH1off >> 8);
+        TextByteTreeg[6] = (byte) intValueCH1sleep;
+        TextByteTreeg[7] = (byte) (intValueCH1sleep >> 8);
 
         presenter.onCreate(getIntent());
         seekBarCH1on.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -84,13 +89,17 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH1on.setText(String.valueOf(seekBar.getProgress()));
-                intValueCHon = seekBarCH1on.getProgress();
+                intValueCH1on = seekBarCH1on.getProgress();
                 indicatorTypeMessage = 0x01;
                 numberChannel = 0x01;
                 TextByteTreeg[0] = indicatorTypeMessage;
                 TextByteTreeg[1] = numberChannel;
-                TextByteTreeg[2] = (byte) intValueCHon;
-                TextByteTreeg[3] = (byte) (intValueCHon >> 8);
+                TextByteTreeg[2] = (byte) intValueCH1on;
+                TextByteTreeg[3] = (byte) (intValueCH1on >> 8);
+                TextByteTreeg[4] = (byte) intValueCH1off;
+                TextByteTreeg[5] = (byte) (intValueCH1off >> 8);
+                TextByteTreeg[6] = (byte) intValueCH1sleep;
+                TextByteTreeg[7] = (byte) (intValueCH1sleep >> 8);
                 presenter.onHelloWorld(TextByteTreeg);
             }
         });
@@ -98,7 +107,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
         seekBarCH1off.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                intValueCHoff = seekBar.getProgress();
+                intValueCH1off = seekBar.getProgress();
                 valueCH1off.setText(String.valueOf(seekBar.getProgress()));
             }
 
@@ -110,13 +119,17 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH1off.setText(String.valueOf(seekBar.getProgress()));
-                intValueCHoff = seekBarCH1off.getProgress();
+                intValueCH1off = seekBarCH1off.getProgress();
                 indicatorTypeMessage = 0x01;
                 numberChannel = 0x01;
                 TextByteTreeg[0] = indicatorTypeMessage;
                 TextByteTreeg[1] = numberChannel;
-                TextByteTreeg[4] = (byte) intValueCHoff;
-                TextByteTreeg[5] = (byte) (intValueCHoff >> 8);
+                TextByteTreeg[2] = (byte) intValueCH1on;
+                TextByteTreeg[3] = (byte) (intValueCH1on >> 8);
+                TextByteTreeg[4] = (byte) intValueCH1off;
+                TextByteTreeg[5] = (byte) (intValueCH1off >> 8);
+                TextByteTreeg[6] = (byte) intValueCH1sleep;
+                TextByteTreeg[7] = (byte) (intValueCH1sleep >> 8);
                 presenter.onHelloWorld(TextByteTreeg);
             }
         });
@@ -135,13 +148,17 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH1sleep.setText(String.valueOf(seekBar.getProgress()));
-                intValueCHsleep = seekBarCH1sleep.getProgress();
+                intValueCH1sleep = seekBarCH1sleep.getProgress();
                 indicatorTypeMessage = 0x01;
                 numberChannel = 0x01;
                 TextByteTreeg[0] = indicatorTypeMessage;
                 TextByteTreeg[1] = numberChannel;
-                TextByteTreeg[6] = (byte) intValueCHsleep;
-                TextByteTreeg[7] = (byte) (intValueCHsleep >> 8);
+                TextByteTreeg[2] = (byte) intValueCH1on;
+                TextByteTreeg[3] = (byte) (intValueCH1on >> 8);
+                TextByteTreeg[4] = (byte) intValueCH1off;
+                TextByteTreeg[5] = (byte) (intValueCH1off >> 8);
+                TextByteTreeg[6] = (byte) intValueCH1sleep;
+                TextByteTreeg[7] = (byte) (intValueCH1sleep >> 8);
                 presenter.onHelloWorld(TextByteTreeg);
             }
         });
@@ -160,13 +177,17 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH2on.setText(String.valueOf(seekBar.getProgress()));
-                intValueCHon = seekBarCH2on.getProgress();
+                intValueCH2on = seekBarCH2on.getProgress();
                 indicatorTypeMessage = 0x01;
                 numberChannel = 0x02;
                 TextByteTreeg[0] = indicatorTypeMessage;
                 TextByteTreeg[1] = numberChannel;
-                TextByteTreeg[2] = (byte) intValueCHon;
-                TextByteTreeg[3] = (byte) (intValueCHon >> 8);
+                TextByteTreeg[2] = (byte) intValueCH2on;
+                TextByteTreeg[3] = (byte) (intValueCH2on >> 8);
+                TextByteTreeg[4] = (byte) intValueCH2off;
+                TextByteTreeg[5] = (byte) (intValueCH2off >> 8);
+                TextByteTreeg[6] = (byte) intValueCH2sleep;
+                TextByteTreeg[7] = (byte) (intValueCH2sleep >> 8);
                 presenter.onHelloWorld(TextByteTreeg);
             }
         });
@@ -185,13 +206,17 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH2off.setText(String.valueOf(seekBar.getProgress()));
-                intValueCHoff = seekBarCH2off.getProgress();
+                intValueCH2off = seekBarCH2off.getProgress();
                 indicatorTypeMessage = 0x01;
                 numberChannel = 0x02;
                 TextByteTreeg[0] = indicatorTypeMessage;
                 TextByteTreeg[1] = numberChannel;
-                TextByteTreeg[4] = (byte) intValueCHoff;
-                TextByteTreeg[5] = (byte) (intValueCHoff >> 8);
+                TextByteTreeg[2] = (byte) intValueCH2on;
+                TextByteTreeg[3] = (byte) (intValueCH2on >> 8);
+                TextByteTreeg[4] = (byte) intValueCH2off;
+                TextByteTreeg[5] = (byte) (intValueCH2off >> 8);
+                TextByteTreeg[6] = (byte) intValueCH2sleep;
+                TextByteTreeg[7] = (byte) (intValueCH2sleep >> 8);
                 presenter.onHelloWorld(TextByteTreeg);
             }
         });
@@ -210,13 +235,28 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 valueCH2sleep.setText(String.valueOf(seekBar.getProgress()));
-                intValueCHsleep = seekBarCH2sleep.getProgress();
+                intValueCH2sleep = seekBarCH2sleep.getProgress();
                 indicatorTypeMessage = 0x01;
                 numberChannel = 0x02;
                 TextByteTreeg[0] = indicatorTypeMessage;
                 TextByteTreeg[1] = numberChannel;
-                TextByteTreeg[2] = (byte) intValueCHsleep;
-                TextByteTreeg[3] = (byte) (intValueCHsleep >> 8);
+                TextByteTreeg[2] = (byte) intValueCH2on;
+                TextByteTreeg[3] = (byte) (intValueCH2on >> 8);
+                TextByteTreeg[4] = (byte) intValueCH2off;
+                TextByteTreeg[5] = (byte) (intValueCH2off >> 8);
+                TextByteTreeg[6] = (byte) intValueCH2sleep;
+                TextByteTreeg[7] = (byte) (intValueCH2sleep >> 8);
+                presenter.onHelloWorld(TextByteTreeg);
+            }
+        });
+
+        helloWorld2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                indicatorTypeMessage = 0x02;
+                numberChannel = 0x02;
+                TextByteTreeg[0] = indicatorTypeMessage;
+                TextByteTreeg[1] = numberChannel;
                 presenter.onHelloWorld(TextByteTreeg);
             }
         });
@@ -224,15 +264,12 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
 
     @OnClick(R.id.activity_chat_hello_world)
     public void onHelloWorld(){
-//        presenter.sendData(intValueCH1off);
+        indicatorTypeMessage = 0x02;
+        numberChannel = 0x01;
+        TextByteTreeg[0] = indicatorTypeMessage;
+        TextByteTreeg[1] = numberChannel;
         presenter.onHelloWorld(TextByteTreeg);
     }
-
-//    @OnClick(R.id.activity_chat_hello_world2)
-//    public void onHelloWorld(){
-////        presenter.sendData(intValueCH1off);
-//        presenter.onHelloWorld(TextByteTreeg);
-//    }
 
     @Override
     public void setStatus(String status) {
@@ -245,10 +282,24 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     }
 
     @Override
-    public void setValueCH1(int levelCH1) {
-        String str = new String(String.valueOf(levelCH1));
-        valueCH1.setText(str);
+    public void setValueCH1(int levelCH1, int numberChannel) {
+        String strlevelCH1 = new String(String.valueOf(levelCH1));
+        Integer numberOfChannel = new Integer(numberChannel);
+        switch (numberOfChannel){
+            case 1:
+                valueCH1.setText(strlevelCH1);
+                break;
+            case 2:
+                valueCH2.setText(strlevelCH1);
+                break;
+        }
     }
+
+//    @Override
+//    public void setValueCH2(int levelCH2) {
+//        String str = new String(String.valueOf(levelCH2));
+//        valueCH2.setText(str);
+//    }
 
     @Override
     public void appendMessage(String message) {

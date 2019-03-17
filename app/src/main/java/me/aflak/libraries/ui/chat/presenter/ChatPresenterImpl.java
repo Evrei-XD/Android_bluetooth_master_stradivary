@@ -18,6 +18,7 @@ public class ChatPresenterImpl implements ChatPresenter {
     private BluetoothDevice device;
     private byte aByte[] = {0x4D, 0x54, 0x01, 0x00, 0x00, 0x03, 0x00, 0x01, 0x24} ;
     private byte txtbyteout1[] = {0x4D, 0x54, 0x07, 0x00, 0x01, 0x02, 0x00, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x24}; //компановка для отправки порогов сигналов 0x77 заменяемые данные всего 15 байт
+    private byte txtbyteout2[] = {0x4D, 0x54, 0x01, 0x00, 0x00, 0x03, 0x00, 0x77, 0x24};
 
     public ChatPresenterImpl(ChatView view, ChatInteractor interactor) {
         this.view = view;
@@ -73,35 +74,32 @@ public class ChatPresenterImpl implements ChatPresenter {
                 interactor.sendMessageByte(txtbyteout1);
                 break;
             case 2:
-                System.out.println("тип компановки:" + txtbyte[0]);
-                System.out.println("номер канала получателя:" + txtbyte[1]);
+                System.out.println("--> тип компановки:" + txtbyte[0]);
+                System.out.println("--> номер канала получателя:" + txtbyte[1]);
                 view.appendMessage("--> отправка на канал" + txtbyte[1]);
-                for (int i = 1; i < txtbyte.length; i++) //aByte.length
-                {
-                    System.out.println("КОМПАНОВКА ПОСЫЛКИ:" + txtbyte[i]);
-                }
-                interactor.sendMessageByte(txtbyte);
+                txtbyteout2[7] = txtbyte[1];
+                interactor.sendMessageByte(txtbyteout2);
                 break;
             default:
-                System.out.println("тип компановки:" + txtbyte[0]);
-                System.out.println("номер канала получателя:" + txtbyte[1]);
+                System.out.println("--> тип компановки:" + txtbyte[0]);
+                System.out.println("--> номер канала получателя:" + txtbyte[1]);
                 view.appendMessage("--> отправка на канал" + txtbyte[1]);
                 for (int i = 1; i < txtbyte.length; i++) //aByte.length
                 {
-                    System.out.println("КОМПАНОВКА ПОСЫЛКИ:" + txtbyte[i]);
+                    System.out.println("--> КОМПАНОВКА ПОСЫЛКИ:" + txtbyte[i]);
 
                 }
                 interactor.sendMessageByte(txtbyte);
                 break;
         }
-        System.out.println("первый байт:" + txtbyteout1[0]);
+        System.out.println("--> первый байт:" + txtbyteout1[0]);
     }
 
-    @Override
-    public void sendData(byte[] data) {
-
-    }
-
+//    @Override
+//    public void sendData(byte[] data) {
+//
+//    }
+//
 //    @Override
 //    public void sendData() {
 //        interactor.sendMessagestr(String.valueOf(integer));
@@ -129,15 +127,16 @@ public class ChatPresenterImpl implements ChatPresenter {
 
         @Override
         public void givsChannel(int channel) {
-            Integer charr = new Integer(channel);
-            System.out.println("номер канала:"+charr);
+            Integer numberChannel = new Integer(channel);
+            System.out.println("номер канала:"+numberChannel);
         }
 
         @Override
-        public void givsLevelCH(int levelCH) {
-            Integer charr = new Integer(levelCH);
-            view.setValueCH1(levelCH);
-            System.out.println("принятый уровень CH:"+charr);
+        public void givsLevelCH(int levelCH, int channel) {
+            Integer lelvel = new Integer(levelCH);
+            Integer numberChannel = new Integer(channel);
+            view.setValueCH1(levelCH, numberChannel);
+            System.out.println("принятый уровень CH:"+lelvel);
         }
 
         @Override

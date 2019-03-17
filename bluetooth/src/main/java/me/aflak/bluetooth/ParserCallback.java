@@ -5,7 +5,7 @@ public interface ParserCallback {
 //    void lol (Integer intege, setText text);
     void givsRequest (Boolean request);
     void givsChannel (int channel);
-    void givsLevelCH (int levelCH);
+    void givsLevelCH (int levelCH, int channel);
     void givsRegister (Integer register);
     void givsCorrectAcceptance (Boolean correct_acceptence);
 }

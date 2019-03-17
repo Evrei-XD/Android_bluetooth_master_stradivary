@@ -1,5 +1,7 @@
 package me.aflak.libraries.ui;
 
+import android.widget.TextView;
+
 import me.aflak.bluetooth.ParserCallback;
 
 class Parser implements ParserCallback {
@@ -41,9 +43,19 @@ class Parser implements ParserCallback {
     }
 
     @Override
-    public void givsLevelCH(int levelCH) {
-        Integer charr = new Integer(levelCH);
-        System.out.println("принятый уровень CH:"+charr);
+    public void givsLevelCH(int levelCH, int numberChannel) {
+        String strlevelCH1 = new String(String.valueOf(levelCH));
+        Integer numberOfChannel = new Integer(numberChannel);
+        switch (numberOfChannel){
+            case 1:
+                TextView valueCH1 = null;
+                valueCH1.setText(strlevelCH1);
+                break;
+            case 2:
+                TextView valueCH2 = null;
+                valueCH2.setText(strlevelCH1);
+                break;
+        }
     }
 
     @Override
