@@ -223,7 +223,7 @@ public class Bluetooth {
     public void sendstr(String msgstr, String charset){
         try {
             if(!TextUtils.isEmpty(charset)) {
-//                out.write(msg.getByte(charset));//Eg: "US-ASCII" as default
+                out.write(msgstr.getBytes(charset));//Eg: "US-ASCII" as default
 //                out.write(msg.getByte());//Sending as UTF-8
             }else {
                 out.write(msgstr.getBytes());//Sending as UTF-8
@@ -247,7 +247,7 @@ public class Bluetooth {
     }
 
     public void sendstr(String msgstr){
-        sendstr(msgstr, null);
+        sendstr(msgstr, "US-ASCII");
     }
 
     public List<BluetoothDevice> getPairedDevices(){
@@ -313,7 +313,7 @@ public class Bluetooth {
         private int msgLenght = 0;    //для свапа младших и старших байт длинны данных
         private int msgRegtster = 0;  //для свапа младших и старших байт номера регистра
         private int msgChannel = 0;   //для номера канала
-        private int msgLevelCH = 0;
+        private int msgLevelCH = 1250;
         private int lowByte = 0;     //для записи младшего байта при перемене младших и старших байт
         private int i=1;
         private boolean request = true;                //true-ответ false-запрос
@@ -350,7 +350,7 @@ public class Bluetooth {
                     }
                     if(i == 4){
                         msgLenght = (msg << 8) + lowByte; //msgLenght содержит количество байт данных в посылке
-                        System.out.println("линна строки:"+msgLenght);
+                        System.out.println("длина строки:"+msgLenght);
                     }
                     if(i == 5){
                         if(msg == 1){

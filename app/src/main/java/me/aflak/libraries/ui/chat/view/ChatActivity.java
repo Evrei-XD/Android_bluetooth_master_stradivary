@@ -171,6 +171,9 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     @Override
     public void enableHWButton(boolean enabled) {
         helloWorld.setEnabled(enabled);
+        seekBarCH1on.setEnabled(enabled);
+        seekBarCH1off.setEnabled(enabled);
+        seekBarCH1sleep.setEnabled(enabled);
     }
 
     @Override

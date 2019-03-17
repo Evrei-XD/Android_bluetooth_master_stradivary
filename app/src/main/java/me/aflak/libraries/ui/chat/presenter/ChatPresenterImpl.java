@@ -17,7 +17,7 @@ public class ChatPresenterImpl implements ChatPresenter {
     private ChatInteractor interactor;
     private BluetoothDevice device;
     private byte aByte[] = {0x4D, 0x54, 0x01, 0x00, 0x00, 0x03, 0x00, 0x01, 0x24} ;
-    private byte txtbyteout1[] = {0x4D, 0x54, 0x07, 0x00, 0x01, 0x20, 0x00, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x24}; //компановка для отправки порогов сигналов 0x77 заменяемые данные всего 15 байт
+    private byte txtbyteout1[] = {0x4D, 0x54, 0x07, 0x00, 0x01, 0x02, 0x00, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x24}; //компановка для отправки порогов сигналов 0x77 заменяемые данные всего 15 байт
 
     public ChatPresenterImpl(ChatView view, ChatInteractor interactor) {
         this.view = view;
@@ -61,45 +61,40 @@ public class ChatPresenterImpl implements ChatPresenter {
 //        {
 //            System.arraycopy(txtbyte, i*2, txtbyteout, i, 1);
 //        }
-/////////////////////////////////
-//        switch (txtbyte[0]) {
-//            case 1:
+        switch (txtbyte[0]) {
+            case 1: //компановка посылки записи порогов на любой канал
 //                System.out.println("тип компановки:" + txtbyte[0]);
 //                System.out.println("номер канала получателя:" + txtbyte[1]);
-//                for (int i = 1; i < txtbyte.length; i++) //aByte.length
-//                {
-//                    txtbyteout1[i + 6] = txtbyte[i];
-//                    view.appendMessage("--> отправка на канал" + txtbyte[1]);
-//                }
-//                for (int i = 0; i < txtbyteout1.length; i++) //aByte.length
-//                {
-//                    System.out.println("чё получилось:" + txtbyteout1[i]);
-//                }
-//                break;
-//            case 2:
-//                interactor.sendMessageByte(txtbyte);
-//                System.out.println("тип компановки:" + txtbyte[0]);
-//                System.out.println("номер канала получателя:" + txtbyte[1]);
-//                for (int i = 1; i < txtbyte.length; i++) //aByte.length
-//                {
-//                    System.out.println("КОМПАНОВКА ПОСЫЛКИ:" + txtbyte[i]);
-//                    view.appendMessage("--> отправка на канал" + txtbyte[1]);
-//                }
-//                break;
-//            default:
-//                interactor.sendMessageByte(txtbyte);
-//                for (int i = 0; i < txtbyte.length; i++) //aByte.length
-//                {
-//                    System.out.println("КОМПАНОВКА ПОСЫЛКИ:" + txtbyte[i]);
-//                    view.appendMessage("--> отправка на канал" + txtbyte[1]);
-//                }
-//                break;
-//        }
-        interactor.sendMessageByte(aByte);
-        for (int i = 0; i < 1; i++) //aByte.length
-        {
-            view.appendMessage("--> " + aByte[i]);
+                view.appendMessage("--> отправка на канал" + txtbyte[1]);
+                for (int i = 1; i < txtbyte.length; i++)
+                {
+                    txtbyteout1[i + 6] = txtbyte[i];
+                }
+                interactor.sendMessageByte(txtbyteout1);
+                break;
+            case 2:
+                System.out.println("тип компановки:" + txtbyte[0]);
+                System.out.println("номер канала получателя:" + txtbyte[1]);
+                view.appendMessage("--> отправка на канал" + txtbyte[1]);
+                for (int i = 1; i < txtbyte.length; i++) //aByte.length
+                {
+                    System.out.println("КОМПАНОВКА ПОСЫЛКИ:" + txtbyte[i]);
+                }
+                interactor.sendMessageByte(txtbyte);
+                break;
+            default:
+                System.out.println("тип компановки:" + txtbyte[0]);
+                System.out.println("номер канала получателя:" + txtbyte[1]);
+                view.appendMessage("--> отправка на канал" + txtbyte[1]);
+                for (int i = 1; i < txtbyte.length; i++) //aByte.length
+                {
+                    System.out.println("КОМПАНОВКА ПОСЫЛКИ:" + txtbyte[i]);
+
+                }
+                interactor.sendMessageByte(txtbyte);
+                break;
         }
+        System.out.println("первый байт:" + txtbyteout1[0]);
     }
 
     @Override
