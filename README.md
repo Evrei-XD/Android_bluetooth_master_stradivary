@@ -1,4 +1,4 @@
-# Android Bluetooth Library [ ![Download](https://api.bintray.com/packages/omaflak/maven/bluetooth/images/download.svg) ](https://vk.com/audios101331262)
+# Android Bluetooth Library [ ![Download](https://api.bintray.com/packages/omaflak/maven/bluetooth/images/download.svg) ](https://motorica.org/)
 
 <img src="Logotype primary.png" width="60%" height="60%" />
 
