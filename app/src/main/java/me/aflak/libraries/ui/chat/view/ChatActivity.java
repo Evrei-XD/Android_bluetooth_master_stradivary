@@ -67,6 +67,8 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
 
         ButterKnife.bind(this);
 
+        System.out.printf("onCreate: Initializeing Sensor Servece");
+
         TextByteTreeg[2] = (byte) intValueCH1on;
         TextByteTreeg[3] = (byte) (intValueCH1on >> 8);
         TextByteTreeg[4] = (byte) intValueCH1off;
