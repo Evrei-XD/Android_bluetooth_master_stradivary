@@ -67,7 +67,6 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             .bluetoothModule(MyApp.app().bluetoothModule())
             .chatModule(new ChatModule(this))
             .build().inject(this);
-
         ButterKnife.bind(this);
 
         System.out.printf("onCreate: Initializeing Sensor Servece");
