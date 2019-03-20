@@ -51,6 +51,9 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     private int intValueCH2sleep = 200;
     private byte indicatorTypeMessage;
     private byte numberChannel;
+    public boolean isEnable = false;
+    private boolean firstStart = true;
+    private int i = 0;
     public byte[] TextByteTreeg = new byte[8];
 
     @Inject ChatPresenter presenter;
@@ -264,6 +267,33 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    try{
+                        Thread.sleep(200);
+                    } catch (InterruptedException e){}
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isEnable){
+                                indicatorTypeMessage = 0x02;
+                                numberChannel = 0x02;
+                                TextByteTreeg[0] = indicatorTypeMessage;
+                                TextByteTreeg[1] = numberChannel;
+                                presenter.onHelloWorld(TextByteTreeg);
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
     @OnClick(R.id.activity_chat_hello_world)
     public void onHelloWorld(){
         indicatorTypeMessage = 0x02;
@@ -305,12 +335,14 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
 
     @Override
     public void appendMessage(String message) {
-        String str = messages.getText()+"\n"+message;
+        String str = message + " C-->" + i;//messages.getText()+"\n"+
         messages.setText(str);
+        i++;
     }
 
     @Override
     public void enableHWButton(boolean enabled) {
+        isEnable = enabled;
         helloWorld.setEnabled(enabled);
         helloWorld2.setEnabled(enabled);
         seekBarCH1on.setEnabled(enabled);
