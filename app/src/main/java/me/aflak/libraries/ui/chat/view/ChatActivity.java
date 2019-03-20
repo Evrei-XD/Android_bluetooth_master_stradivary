@@ -1,13 +1,30 @@
 package me.aflak.libraries.ui.chat.view;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import javax.inject.Inject;
 
@@ -24,7 +41,7 @@ import me.aflak.libraries.ui.chat.presenter.ChatPresenter;
  * Created by Omar on 20/12/2017.
  */
 
-public class ChatActivity extends AppCompatActivity implements ChatView{
+public class ChatActivity extends AppCompatActivity implements ChatView, SensorEventListener {
     @BindView(R.id.activity_chat_status) TextView state;
     @BindView(R.id.seekBarCH1on) SeekBar seekBarCH1on;
     @BindView(R.id.seekBarCH1off) SeekBar seekBarCH1off;
@@ -55,6 +72,15 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     private boolean firstStart = true;
     private int i = 0;
     public byte[] TextByteTreeg = new byte[8];
+    //for graph
+    private SensorManager sensorManager;
+    private Sensor mAccelerometer;
+    private LineChart mChart;
+    private boolean plotData = true;
+//    private LineChart mChart2;
+    private Thread thread;
+    private boolean plotData2 = true;
+    String TAG = "thread";
 
     @Inject ChatPresenter presenter;
 
@@ -69,7 +95,55 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
             .build().inject(this);
         ButterKnife.bind(this);
 
-        System.out.printf("onCreate: Initializeing Sensor Servece");
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        Log.i(TAG, "onCreate: Register accelerometer sensor");
+        if(mAccelerometer != null){
+            sensorManager.registerListener(ChatActivity.this,mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+        }
+
+////////initialized graph for channel 1
+        mChart = (LineChart) findViewById(R.id.chartCH1);
+
+        mChart.getDescription().setEnabled(true);
+        mChart.getDescription().setText("Real time CH1");
+
+        mChart.setTouchEnabled(true);
+        mChart.setDragEnabled(false);
+        mChart.setDragXEnabled(false);
+        mChart.setScaleEnabled(false);
+        mChart.setDrawGridBackground(false);
+        mChart.setPinchZoom(false);
+        mChart.setBackgroundColor(Color.BLACK);
+
+        LineData data2 = new LineData();
+        data2.setValueTextColor(Color.WHITE);
+        mChart.setData(data2);
+
+        Legend legend2 = mChart.getLegend();
+
+        legend2.setForm(Legend.LegendForm.LINE);
+        legend2.setTextColor(Color.WHITE);
+
+        XAxis x1 = mChart.getXAxis();
+        x1.setTextColor(Color.WHITE);
+        x1.setDrawGridLines(false);
+        x1.setAxisMaximum(4000000f);//x1.resetAxisMaximum();
+
+
+        x1.setAvoidFirstLastClipping(true);
+
+        YAxis y1 = mChart.getAxisLeft();
+        y1.setTextColor(Color.WHITE);
+        y1.setAxisMaximum(2700f);
+        y1.setAxisMinimum(-100f);
+        y1.setDrawGridLines(true);
+
+        YAxis y12 = mChart.getAxisRight();
+        y12.setEnabled(false);
+
+//        startPlot();
 
         TextByteTreeg[2] = (byte) intValueCH1on;
         TextByteTreeg[3] = (byte) (intValueCH1on >> 8);
@@ -262,35 +336,125 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
                 TextByteTreeg[0] = indicatorTypeMessage;
                 TextByteTreeg[1] = numberChannel;
                 presenter.onHelloWorld(TextByteTreeg);
+                addEntry(2500);
             }
         });
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        new Thread(new Runnable() {
+        if(thread != null){
+            thread.interrupt();
+        }
+        thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true){
-                    try{
-                        Thread.sleep(200);
-                    } catch (InterruptedException e){}
+                    if(plotData){
+                        addEntry(2);
+                        plotData = false;
+                    }
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (isEnable){
+                            if (isEnable) {
                                 indicatorTypeMessage = 0x02;
-                                numberChannel = 0x02;
+                                numberChannel = 0x01;
                                 TextByteTreeg[0] = indicatorTypeMessage;
                                 TextByteTreeg[1] = numberChannel;
                                 presenter.onHelloWorld(TextByteTreeg);
                             }
                         }
                     });
+                    try {
+                        System.out.println("поток работает!!");
+                        Thread.sleep(333);
+                    }catch (Exception e){}
                 }
             }
-        }).start();
+        });
+        thread.start();
+    }
+
+    private void addEntry(int event){
+
+        LineData data = mChart.getData();
+
+        if(data != null){
+            ILineDataSet set = data.getDataSetByIndex(0);
+
+            if(set == null){
+                set = createSet();
+                data.addDataSet(set);
+            }
+
+            data.addEntry(new Entry(set.getEntryCount(), event), 0);
+            data.notifyDataChanged();
+
+            mChart.setVisibleXRange(0, 100);
+            mChart.setMaxVisibleValueCount(0);
+            mChart.moveViewToX(set.getEntryCount()-100);//data.getEntryCount()
+
+        }
+    }
+
+    private LineDataSet createSet() {
+        LineDataSet set2 = new LineDataSet(null, "NOT Dynamic data");
+        set2.setAxisDependency(YAxis.AxisDependency.LEFT);//.AxisDependency.LEFT
+        set2.setLineWidth(3f);
+        set2.setColor(Color.GREEN);
+        set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        set2.setCubicIntensity(0.2f);
+
+        set2.setCircleColor(Color.GREEN);
+        set2.setCircleHoleColor(Color.GREEN);
+        set2.setCircleSize(2f);
+        set2.setFillAlpha(65);
+        set2.setFillColor(ColorTemplate.getHoloBlue());
+        set2.setHighLightColor(Color.rgb(244, 117, 177));
+        set2.setValueTextColor(Color.WHITE);
+        set2.setValueTextSize(10f);
+        return set2;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+//        if(thread != null){
+//            thread.interrupt();
+//        }
+//        thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while (true){
+//                    plotData = true;
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if (isEnable) {
+//                                indicatorTypeMessage = 0x02;
+//                                numberChannel = 0x01;
+//                                TextByteTreeg[0] = indicatorTypeMessage;
+//                                TextByteTreeg[1] = numberChannel;
+//                                presenter.onHelloWorld(TextByteTreeg);
+//                            }
+//                        }
+//                    });
+//                    try {
+////                        System.out.println("поток работает!!");
+//                        Thread.sleep(100);
+//                    }catch (Exception e){}
+//                }
+//            }
+//        });
+//        thread.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        try {
+            thread.interrupt();
+        } catch (Exception e){}
     }
 
     @OnClick(R.id.activity_chat_hello_world)
@@ -300,6 +464,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
         TextByteTreeg[0] = indicatorTypeMessage;
         TextByteTreeg[1] = numberChannel;
         presenter.onHelloWorld(TextByteTreeg);
+        addEntry(20);
     }
 
     @Override
@@ -319,6 +484,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
         switch (numberOfChannel){
             case 1:
                 valueCH1.setText(strlevelCH1);
+                addEntry(levelCH1);
                 break;
             case 2:
                 valueCH2.setText(strlevelCH1);
@@ -367,5 +533,23 @@ public class ChatActivity extends AppCompatActivity implements ChatView{
     protected void onStop() {
         super.onStop();
         presenter.onStop();
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+//        if(plotData){
+//            addEntry(event);
+//            plotData = false;
+//        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
