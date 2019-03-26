@@ -16,6 +16,8 @@
     <string name="bluetooth_disconnected">Device Disconnected.</string>
     <string name="bluetooth_connect_in_3sec">Could not connect. New attempt in 3sec…</string>
     <string name="bluetooth_turning_on">Turning bluetooth on…</string>
+    <string name="title_home">Жесты</string>
+    <string name="title_dashboard">Датчики</string>
     <string name="valueCH1">TextView</string>
     <string name="ch1">CH1:</string>
     <string name="_100">100</string>
@@ -26,4 +28,5 @@
     <string name="mv3">mV</string>
     <string name="_1250">1250</string>
     <string name="_2500">2500</string>
+    <string name="state_view">lolol</string>
 </resources>

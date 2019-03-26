@@ -7,11 +7,15 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +62,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     @BindView(R.id.activity_chat_messages) TextView messages;
     @BindView(R.id.valueCH1) TextView valueCH1;
     @BindView(R.id.valueCH2) TextView valueCH2;
+    @BindView(R.id.layout_sensors) RelativeLayout layoutSensors;
     @BindView(R.id.activity_chat_hello_world) Button helloWorld;
     @BindView(R.id.activity_chat_hello_world2) Button helloWorld2;
     private int intValueCH1on = 2500;
@@ -84,6 +89,32 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
 
     @Inject ChatPresenter presenter;
 
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    Log.i(TAG, "oncliiiiick");
+                    layoutSensors.setVisibility(View.GONE);
+                    helloWorld2.setVisibility(View.GONE);
+
+                    return true;
+                case R.id.navigation_dashboard:
+                    Log.i(TAG, ":))");
+                    layoutSensors.setVisibility(View.VISIBLE);
+                    helloWorld2.setVisibility(View.VISIBLE);
+                    return true;
+//                case R.id.navigation_notifications:
+//                    mTextMessage.setText("3");
+//                    return true;
+            }
+            return false;
+
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +129,9 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         Log.i(TAG, "onCreate: Register accelerometer sensor");
         if(mAccelerometer != null){
             sensorManager.registerListener(ChatActivity.this,mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
@@ -107,8 +141,6 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
         mChart = (LineChart) findViewById(R.id.chartCH1);
 
         mChart.getDescription().setEnabled(true);
-        mChart.getDescription().setText("Real time CH1");
-
         mChart.setTouchEnabled(true);
         mChart.setDragEnabled(false);
         mChart.setDragXEnabled(false);
@@ -116,6 +148,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
         mChart.setDrawGridBackground(false);
         mChart.setPinchZoom(false);
         mChart.setBackgroundColor(Color.BLACK);
+        mChart.getHighlightByTouchPoint(1, 1);
 
         LineData data2 = new LineData();
         data2.setValueTextColor(Color.WHITE);
@@ -331,6 +364,11 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
         helloWorld2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                if(isEnable){
+                    isEnable = false;
+                } else {
+                    isEnable = true;
+                }
                 indicatorTypeMessage = 0x02;
                 numberChannel = 0x02;
                 TextByteTreeg[0] = indicatorTypeMessage;
@@ -364,8 +402,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
                         }
                     });
                     try {
-                        System.out.println("поток работает!!");
-                        Thread.sleep(333);
+                        Thread.sleep(100);
                     }catch (Exception e){}
                 }
             }
@@ -388,64 +425,37 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
             data.addEntry(new Entry(set.getEntryCount(), event), 0);
             data.notifyDataChanged();
 
-            mChart.setVisibleXRange(0, 100);
+            mChart.setVisibleXRange(0, 50);
             mChart.setMaxVisibleValueCount(0);
-            mChart.moveViewToX(set.getEntryCount()-100);//data.getEntryCount()
+            mChart.moveViewToX(set.getEntryCount()-50);//data.getEntryCount()
 
         }
     }
 
     private LineDataSet createSet() {
-        LineDataSet set2 = new LineDataSet(null, "NOT Dynamic data");
+        LineDataSet set2 = new LineDataSet(null, null);
         set2.setAxisDependency(YAxis.AxisDependency.LEFT);//.AxisDependency.LEFT
-        set2.setLineWidth(3f);
+        set2.setLineWidth(2f);
         set2.setColor(Color.GREEN);
         set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set2.setCubicIntensity(0.2f);
 
         set2.setCircleColor(Color.GREEN);
         set2.setCircleHoleColor(Color.GREEN);
-        set2.setCircleSize(2f);
+        set2.setCircleSize(1f);
         set2.setFillAlpha(65);
         set2.setFillColor(ColorTemplate.getHoloBlue());
         set2.setHighLightColor(Color.rgb(244, 117, 177));
         set2.setValueTextColor(Color.WHITE);
         set2.setValueTextSize(10f);
+
+        set2.setHighLightColor(Color.YELLOW);
         return set2;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-//        if(thread != null){
-//            thread.interrupt();
-//        }
-//        thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                while (true){
-//                    plotData = true;
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if (isEnable) {
-//                                indicatorTypeMessage = 0x02;
-//                                numberChannel = 0x01;
-//                                TextByteTreeg[0] = indicatorTypeMessage;
-//                                TextByteTreeg[1] = numberChannel;
-//                                presenter.onHelloWorld(TextByteTreeg);
-//                            }
-//                        }
-//                    });
-//                    try {
-////                        System.out.println("поток работает!!");
-//                        Thread.sleep(100);
-//                    }catch (Exception e){}
-//                }
-//            }
-//        });
-//        thread.start();
     }
 
     @Override
@@ -478,16 +488,17 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     }
 
     @Override
-    public void setValueCH1(int levelCH1, int numberChannel) {
-        String strlevelCH1 = new String(String.valueOf(levelCH1));
+    public void setValueCH(int levelCH, int numberChannel) {
+        String strlevelCH = new String(String.valueOf(levelCH));
         Integer numberOfChannel = new Integer(numberChannel);
         switch (numberOfChannel){
             case 1:
-                valueCH1.setText(strlevelCH1);
-                addEntry(levelCH1);
+                valueCH1.setText(strlevelCH);
+                addEntry(levelCH);
                 break;
             case 2:
-                valueCH2.setText(strlevelCH1);
+                valueCH2.setText(strlevelCH);
+                addEntry(levelCH);
                 break;
         }
     }
