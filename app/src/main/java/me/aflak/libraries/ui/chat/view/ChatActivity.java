@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +33,9 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -37,6 +43,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.aflak.libraries.MyApp;
 import me.aflak.libraries.R;
+import me.aflak.libraries.data.GesstureAdapter;
+import me.aflak.libraries.data.Gesture_my;
 import me.aflak.libraries.ui.chat.data.ChatModule;
 import me.aflak.libraries.ui.chat.data.DaggerChatComponent;
 import me.aflak.libraries.ui.chat.presenter.ChatPresenter;
@@ -65,6 +73,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     @BindView(R.id.layout_sensors) RelativeLayout layoutSensors;
     @BindView(R.id.activity_chat_hello_world) Button helloWorld;
     @BindView(R.id.activity_chat_hello_world2) Button helloWorld2;
+    @BindView(R.id.fab) FloatingActionButton fab;
     private int intValueCH1on = 2500;
     private int intValueCH1off = 100;
     private int intValueCH1sleep = 200;
@@ -87,6 +96,10 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     private boolean plotData2 = true;
     String TAG = "thread";
 
+    RecyclerView recyclerView;
+    GesstureAdapter gestureAdapter;
+    List<Gesture_my> gestureMyList;
+
     @Inject ChatPresenter presenter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -98,13 +111,14 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
                 case R.id.navigation_home:
                     Log.i(TAG, "oncliiiiick");
                     layoutSensors.setVisibility(View.GONE);
-                    helloWorld2.setVisibility(View.GONE);
-
+                    fab.show();
+//                    fab.setVisibility(View.VISIBLE);
                     return true;
                 case R.id.navigation_dashboard:
                     Log.i(TAG, ":))");
                     layoutSensors.setVisibility(View.VISIBLE);
-                    helloWorld2.setVisibility(View.VISIBLE);
+                    fab.hide();
+//                    fab.setVisibility(View.GONE);
                     return true;
 //                case R.id.navigation_notifications:
 //                    mTextMessage.setText("3");
@@ -119,6 +133,39 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        gestureMyList = new ArrayList<>();
+        recyclerView = (RecyclerView) findViewById(R.id.gestures_list);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //adding some items to our list
+        gestureMyList.add(
+                new Gesture_my(
+                        1,
+                        "Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)",
+                        "13.3 inch, Silver, 1.35 kg",
+                        4.3,
+                        60000,
+                        R.drawable.macbook));
+
+        gestureMyList.add(
+                new Gesture_my(
+                        1,
+                        "Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
+                        "14 inch, Gray, 1.659 kg",
+                        4.3,
+                        60000,
+                        R.drawable.dellinspiron));
+
+        gestureMyList.add(
+                new Gesture_my(
+                        1,
+                        "Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
+                        "13.3 inch, Silver, 1.35 kg",
+                        4.3,
+                        60000,
+                        R.drawable.surface));
 
         DaggerChatComponent.builder()
             .bluetoothModule(MyApp.app().bluetoothModule())
