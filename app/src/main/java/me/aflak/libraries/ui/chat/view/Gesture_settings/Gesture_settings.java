@@ -59,12 +59,12 @@ public class Gesture_settings extends AppCompatActivity implements GesstureAdapt
 
     private void getIncomingIntent(){
         if (getIntent().hasExtra("image_url") && getIntent().hasExtra("image_name")){
-
         }
     }
 
     @Override
     public void onGestureClick(int position) {
+
 
     }
 }
