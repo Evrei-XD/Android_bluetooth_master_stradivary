@@ -13,6 +13,7 @@ import java.util.List;
 import me.aflak.libraries.R;
 import me.aflak.libraries.data.GesstureAdapter;
 import me.aflak.libraries.data.Gesture_my;
+import me.aflak.libraries.ui.chat.view.Gripper_settings.GripperSettings;
 
 public class Gesture_settings extends AppCompatActivity implements GesstureAdapter.OnGestureMyListener {
 
@@ -67,15 +68,15 @@ public class Gesture_settings extends AppCompatActivity implements GesstureAdapt
     public void onGestureClick(int position) {
         switch (position) {
             case 0:
-                Intent intent = new Intent(this, me.aflak.libraries.ui.chat.view.Gesture_settings.GripperSettings.class);
+                Intent intent = new Intent(this, GripperSettings.class);
                 startActivity(intent);
                 break;
             case 1:
-                Intent intent2 = new Intent(this, me.aflak.libraries.ui.chat.view.Gesture_settings.GripperSettings.class);
+                Intent intent2 = new Intent(this, GripperSettings.class);
                 startActivity(intent2);
                 break;
             default:
-                Intent intent_b = new Intent(this, me.aflak.libraries.ui.chat.view.Gesture_settings.GripperSettings.class);
+                Intent intent_b = new Intent(this, GripperSettings.class);
                 startActivity(intent_b);
                 break;
 
