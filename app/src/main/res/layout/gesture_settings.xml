@@ -1,27 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gestures_settings"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="100">
+    android:layout_height="596dp"
+    android:layout_marginTop="24dp"
+    android:layout_marginBottom="48dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:visibility="visible"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.0"
+    tools:ignore="MissingConstraints">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="70"
-        android:id="@+id/image"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/image_description"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:text="Canada"
-        android:textSize="20sp"
-        android:textColor="#000"
-        />
-
-</LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/gestures_list"
+        android:layout_width="377dp"
+        android:layout_height="463dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:clipChildren="false"
+        android:clipToPadding="true"></android.support.v7.widget.RecyclerView>
+</RelativeLayout>

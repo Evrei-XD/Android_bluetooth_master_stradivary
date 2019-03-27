@@ -13,9 +13,9 @@ import me.aflak.libraries.R;
 import me.aflak.libraries.data.GesstureAdapter;
 import me.aflak.libraries.data.Gesture_my;
 
-public class Gesture_settings extends AppCompatActivity implements GesstureAdapter.OnGestureMyListener {
+public class Gesture_settings2 extends AppCompatActivity implements GesstureAdapter.OnGestureMyListener {
 
-    private static final String TAG = "Gesture_settings";
+    private static final String TAG = "Gesture_settings2";
 
     RecyclerView recyclerView;
     GesstureAdapter gestureAdapter;
@@ -31,15 +31,6 @@ public class Gesture_settings extends AppCompatActivity implements GesstureAdapt
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        gestureMyList.add(
-                new Gesture_my(
-                        1,
-                        R.drawable.three,
-                        "bla bla bla",
-                        "13.3 inch, Silver, 1.35 kg",
-                        "Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
-                        4.3,
-                        60000));
         gestureMyList.add(
                 new Gesture_my(
                         1,

@@ -51,6 +51,8 @@ import me.aflak.libraries.ui.chat.data.ChatModule;
 import me.aflak.libraries.ui.chat.data.DaggerChatComponent;
 import me.aflak.libraries.ui.chat.presenter.ChatPresenter;
 import me.aflak.libraries.ui.chat.view.Gesture_settings.Gesture_settings;
+import me.aflak.libraries.ui.chat.view.Gesture_settings.Gesture_settings2;
+import me.aflak.libraries.ui.scan.view.ScanActivity;
 
 /**
  * Created by Omar on 20/12/2017.
@@ -99,6 +101,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     private Thread thread;
     private boolean plotData2 = true;
     String TAG = "thread";
+    private boolean pervoe_vkluchenie_bluetooth = true;
 
     RecyclerView recyclerView;
     GesstureAdapter gestureAdapter;
@@ -532,6 +535,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     @Override
     protected void onPause() {
         super.onPause();
+        pervoe_vkluchenie_bluetooth = false;
         try {
             thread.interrupt();
         } catch (Exception e){}
@@ -607,13 +611,17 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.onStart(this);
+        if(pervoe_vkluchenie_bluetooth){
+            presenter.onStart(this);
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-//        presenter.onStop();
+        if(pervoe_vkluchenie_bluetooth) {
+            presenter.onStop();
+        }
     }
 
     @Override
@@ -636,9 +644,19 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
 
     @Override
     public void onGestureClick(int position) {
-        Log.i(TAG, "onGestureClick: olpen activity settings" + position);
-
-        Intent intent = new Intent(this, Gesture_settings.class);
-        startActivity(intent);
+        switch (position){
+            case 0:
+                Intent intent = new Intent(this, Gesture_settings2.class);
+                startActivity(intent);
+                break;
+            case 1:
+                Intent intent2 = new Intent(this, ScanActivity.class);
+                startActivity(intent2);
+                break;
+            default:
+                Intent intent3 = new Intent(this, Gesture_settings.class);
+                startActivity(intent3);
+                break;
+        }
     }
 }

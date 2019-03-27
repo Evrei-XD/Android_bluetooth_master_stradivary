@@ -12,7 +12,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import me.aflak.libraries.R;
-import me.aflak.libraries.ui.chat.view.ChatActivity;
 
 public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.GestureViewHolder> {
 
@@ -20,7 +19,7 @@ public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.Gestur
     private List<Gesture_my> gesturesList;
     private OnGestureMyListener mOnGestureMyListener;
 
-    public GesstureAdapter(ChatActivity  mCtx, List<Gesture_my> gesturesList, OnGestureMyListener onGestureMyListener) {
+    public GesstureAdapter(Context  mCtx, List<Gesture_my> gesturesList, OnGestureMyListener onGestureMyListener) {
         this.mCtx = mCtx;
         this.gesturesList = gesturesList;
         this.mOnGestureMyListener = onGestureMyListener;
@@ -42,7 +41,7 @@ public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.Gestur
         holder.textViewTitle.setText(gesture.getTitle());
         holder.textViewInfo.setText(gesture.getInfo());
         holder.textViewRating.setText(String.valueOf(gesture.getRating()));
-        holder.textViewPrice.setText(String.valueOf(gesture.getPrise()));
+//        holder.textViewPrice.setText(String.valueOf(gesture.getPrise()));
         holder.imageView.setImageDrawable(mCtx.getResources().getDrawable(gesture.getImage()));
     }
 
@@ -65,7 +64,7 @@ public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.Gestur
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewInfo = itemView.findViewById(R.id.textViewShortDesc);
             textViewRating = itemView.findViewById(R.id.textViewRating);
-            textViewPrice = itemView.findViewById(R.id.textViewPrice);
+//            textViewPrice = itemView.findViewById(R.id.textViewPrice);
 
             this.onGestureMyListener = onGestureMyListener;
             itemView.setOnClickListener(this);
