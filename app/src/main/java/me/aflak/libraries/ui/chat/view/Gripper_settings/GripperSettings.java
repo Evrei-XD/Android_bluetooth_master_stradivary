@@ -13,10 +13,11 @@ import java.util.List;
 import me.aflak.libraries.R;
 import me.aflak.libraries.data.GesstureAdapter;
 import me.aflak.libraries.data.Gesture_my;
+import me.aflak.libraries.ui.chat.view.Gripper_settings.*;
 
-public class Gesture_settings extends AppCompatActivity implements GesstureAdapter.OnGestureMyListener {
+public class GripperSettings extends AppCompatActivity implements GesstureAdapter.OnGestureMyListener {
 
-    private static final String TAG = "Gesture_settings";
+    private static final String TAG = "GripperSettings";
 
     RecyclerView recyclerView;
     GesstureAdapter gestureAdapter;
@@ -65,20 +66,6 @@ public class Gesture_settings extends AppCompatActivity implements GesstureAdapt
 
     @Override
     public void onGestureClick(int position) {
-        switch (position) {
-            case 0:
-                Intent intent = new Intent(this, me.aflak.libraries.ui.chat.view.Gesture_settings.GripperSettings.class);
-                startActivity(intent);
-                break;
-            case 1:
-                Intent intent2 = new Intent(this, me.aflak.libraries.ui.chat.view.Gesture_settings.GripperSettings.class);
-                startActivity(intent2);
-                break;
-            default:
-                Intent intent_b = new Intent(this, me.aflak.libraries.ui.chat.view.Gesture_settings.GripperSettings.class);
-                startActivity(intent_b);
-                break;
 
-        }
     }
 }

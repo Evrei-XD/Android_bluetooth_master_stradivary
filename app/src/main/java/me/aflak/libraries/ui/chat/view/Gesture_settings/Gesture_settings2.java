@@ -34,12 +34,21 @@ public class Gesture_settings2 extends AppCompatActivity implements GesstureAdap
         gestureMyList.add(
                 new Gesture_my(
                         1,
-                        R.drawable.ic_audiotrack_light,
+                        R.drawable.olpen,
                         "bla bla bla",
-                        "13.3 inch, Silver, 1.35 kg",
-                        "Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
-                        4.3,
-                        60000));
+                        "Позволяет настоить положение максимально открытого состояния",
+                        "Настройка открытого сотояния",
+                        1,
+                        60));
+        gestureMyList.add(
+                new Gesture_my(
+                        1,
+                        R.drawable.close,
+                        "bla bla bla",
+                        "Позволяет настоить положение максимально закрытого состояния",
+                        "Настройка закрытого сотояния",
+                        2,
+                        6));
 
         gestureAdapter = new GesstureAdapter(this, gestureMyList,this);
 //        gestureAdapter = new GesstureAdapter(this, gestureMyList, this);

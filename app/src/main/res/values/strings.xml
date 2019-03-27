@@ -29,4 +29,5 @@
     <string name="_1250">1250</string>
     <string name="_2500">2500</string>
     <string name="state_view">lolol</string>
+    <string name="title_activity_gripper_settings">GripperSettings</string>
 </resources>

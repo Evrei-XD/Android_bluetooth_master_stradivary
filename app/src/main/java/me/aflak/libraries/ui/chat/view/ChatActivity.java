@@ -52,7 +52,6 @@ import me.aflak.libraries.ui.chat.data.DaggerChatComponent;
 import me.aflak.libraries.ui.chat.presenter.ChatPresenter;
 import me.aflak.libraries.ui.chat.view.Gesture_settings.Gesture_settings;
 import me.aflak.libraries.ui.chat.view.Gesture_settings.Gesture_settings2;
-import me.aflak.libraries.ui.scan.view.ScanActivity;
 
 /**
  * Created by Omar on 20/12/2017.
@@ -119,23 +118,6 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
                     Log.i(TAG, "oncliiiiick");
                     layoutSensors.setVisibility(View.GONE);
                     fab.show();
-                    fab.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Snackbar.make(view, "Новый жест добавлен", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-                            gestureMyList.add(
-                                    new Gesture_my(
-                                            1,
-                                            R.drawable.three,
-                                            "bla bla bla",
-                                            "жест предназначенный для взятия кружки",
-                                            "Жест №1",
-                                            2,
-                                            123));
-//                            gestureAdapter = new GesstureAdapter(ChatActivity.this, gestureMyList, this);
-                            recyclerView.setAdapter(gestureAdapter);
-                        }
-                    });
                     layoutGestures.setVisibility(View.VISIBLE);
                     return true;
                 case R.id.navigation_dashboard:
@@ -146,7 +128,6 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
                     return true;
             }
             return false;
-
         }
     };
 
@@ -164,31 +145,31 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
         gestureMyList.add(
                 new Gesture_my(
                         1,
-                        R.drawable.one,
+                        R.drawable.gesture1,
                         "bla bla bla",
-                        "13.3 inch, Silver, 1.35 kg",
-                        "Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)",
-                        4.3,
+                        "Нажмите для редактированиея начального и конечного состояний",
+                        "Жест №1",
+                        2,
                         600000));
 
         gestureMyList.add(
                 new Gesture_my(
                         1,
-                        R.drawable.two,
+                        R.drawable.gesture2,
                         "bla bla bla",
-                        "14 inch, Gray, 1.659 kg",
-                        "Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
-                        4.3,
+                        "Нажмите для редактированиея начального и конечного состояний",
+                        "Жест №2",
+                        2,
                         60000));
 
         gestureMyList.add(
                 new Gesture_my(
                         1,
-                        R.drawable.three,
+                        R.drawable.gesture3,
                         "bla bla bla",
-                        "13.3 inch, Silver, 1.35 kg",
-                        "Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
-                        4.3,
+                        "Нажмите для редактированиея начального и конечного состояний",
+                        "Жест №3",
+                        2,
                         60000));
 
         gestureAdapter = new GesstureAdapter(this, gestureMyList, this);
@@ -206,7 +187,6 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        Log.i(TAG, "onCreate: Register accelerometer sensor");
         if(mAccelerometer != null){
             sensorManager.registerListener(ChatActivity.this,mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
         }
@@ -482,6 +462,24 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
             }
         });
         thread.start();
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Новый жест добавлен", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                gestureMyList.add(
+                        new Gesture_my(
+                                1,
+                                R.drawable.gesture4,
+                                "bla bla bla",
+                                "Нажмите для редактированиея начального и конечного состояний",
+                                "Жест №"+4,
+                                2,
+                                123));
+//                            gestureAdapter = new GesstureAdapter(ChatActivity.this, gestureMyList, this);
+                recyclerView.setAdapter(gestureAdapter);
+            }
+        });
     }
 
     private void addEntry(int event){
@@ -646,16 +644,28 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     public void onGestureClick(int position) {
         switch (position){
             case 0:
-                Intent intent = new Intent(this, Gesture_settings2.class);
+                Intent intent = new Intent(this, Gesture_settings.class);
                 startActivity(intent);
                 break;
             case 1:
-                Intent intent2 = new Intent(this, ScanActivity.class);
+                Intent intent2 = new Intent(this, Gesture_settings2.class);
                 startActivity(intent2);
                 break;
+//            case 2:
+//                Intent intent3 = new Intent(this, Gesture_settings3.class);
+//                startActivity(intent3);
+//                break;
+//            case 3:
+//                Intent intent4 = new Intent(this, Gesture_settings4.class);
+//                startActivity(intent4);
+//                break;
+//            case 4:
+//                Intent intent5 = new Intent(this, Gesture_settings5.class);
+//                startActivity(intent5);
+//                break;
             default:
-                Intent intent3 = new Intent(this, Gesture_settings.class);
-                startActivity(intent3);
+                Intent intent_b = new Intent(this, Gesture_settings.class);
+                startActivity(intent_b);
                 break;
         }
     }

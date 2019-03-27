@@ -484,7 +484,7 @@
             android:layout_alignParentRight="false"
             android:layout_marginStart="69dp"
             android:layout_marginLeft="69dp"
-            android:layout_marginTop="49dp"
+            android:layout_marginTop="27dp"
             android:text="2500"
             android:textAllCaps="false"
             android:textStyle="bold"
@@ -500,7 +500,7 @@
             android:layout_alignParentRight="false"
             android:layout_marginStart="69dp"
             android:layout_marginLeft="69dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="49dp"
             android:text="100"
             android:textAllCaps="false"
             android:textStyle="bold"
@@ -509,7 +509,7 @@
 
         <TextView
             android:id="@+id/valueCH2sleep"
-            android:layout_width="42dp"
+            android:layout_width="41dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/chartCH2"
             android:layout_alignParentEnd="false"
@@ -553,7 +553,8 @@
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
             android:clipChildren="false"
-            android:clipToPadding="true"></android.support.v7.widget.RecyclerView>
+            android:clipToPadding="true"
+            android:visibility="visible"></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -570,4 +571,5 @@
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints" />
+
 </android.support.constraint.ConstraintLayout>
