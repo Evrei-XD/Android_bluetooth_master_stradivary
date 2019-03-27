@@ -82,6 +82,7 @@ public class Bluetooth {
 
     public void onStop(){
         context.unregisterReceiver(bluetoothReceiver);
+        disconnect();
     }
 
     public void showEnableDialog(Activity activity){
