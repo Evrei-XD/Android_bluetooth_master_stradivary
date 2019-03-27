@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Omar on 20/12/2017.
  */
 
-public interface ScanView {
+public interface ScanView{
     void showPairedList(List<String> items);
     void addDeviceToScanList(String item);
     void clearScanList();
