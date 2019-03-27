@@ -1,6 +1,7 @@
 package me.aflak.libraries.ui.chat.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -49,12 +50,13 @@ import me.aflak.libraries.data.Gesture_my;
 import me.aflak.libraries.ui.chat.data.ChatModule;
 import me.aflak.libraries.ui.chat.data.DaggerChatComponent;
 import me.aflak.libraries.ui.chat.presenter.ChatPresenter;
+import me.aflak.libraries.ui.chat.view.Gesture_settings.Gesture_settings;
 
 /**
  * Created by Omar on 20/12/2017.
  */
 
-public class ChatActivity extends AppCompatActivity implements ChatView, SensorEventListener {
+public class ChatActivity extends AppCompatActivity implements ChatView, SensorEventListener, GesstureAdapter.OnGestureMyListener {
     @BindView(R.id.activity_chat_status) TextView state;
     @BindView(R.id.seekBarCH1on) SeekBar seekBarCH1on;
     @BindView(R.id.seekBarCH1off) SeekBar seekBarCH1off;
@@ -127,7 +129,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
                                             "Жест №1",
                                             2,
                                             123));
-                            gestureAdapter = new GesstureAdapter(ChatActivity.this, gestureMyList);
+//                            gestureAdapter = new GesstureAdapter(ChatActivity.this, gestureMyList, this);
                             recyclerView.setAdapter(gestureAdapter);
                         }
                     });
@@ -186,9 +188,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
                         4.3,
                         60000));
 
-
-
-        gestureAdapter = new GesstureAdapter(this, gestureMyList);
+        gestureAdapter = new GesstureAdapter(this, gestureMyList, this);
         recyclerView.setAdapter(gestureAdapter);
 
         DaggerChatComponent.builder()
@@ -532,7 +532,6 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     @Override
     protected void onPause() {
         super.onPause();
-
         try {
             thread.interrupt();
         } catch (Exception e){}
@@ -614,7 +613,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     @Override
     protected void onStop() {
         super.onStop();
-        presenter.onStop();
+//        presenter.onStop();
     }
 
     @Override
@@ -635,10 +634,11 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
 
     }
 
-//    @Override
-//    public void onGestureClick(int position) {
-//        gestureMyList.get(position);
-//        Intent intent = new Intent(this, NewActivitie.class);
-//        startActivity(intent);
-//    }
+    @Override
+    public void onGestureClick(int position) {
+        Log.i(TAG, "onGestureClick: olpen activity settings" + position);
+
+        Intent intent = new Intent(this, Gesture_settings.class);
+        startActivity(intent);
+    }
 }

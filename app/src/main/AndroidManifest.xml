@@ -24,7 +24,7 @@
             android:screenOrientation="portrait"/>/>
         <activity android:name=".ui.chat.view.ChatActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.chat.view.Gesture_settings"
+        <activity android:name=".ui.chat.view.Gesture_settings.Gesture_settings"
             android:screenOrientation="portrait"/>
     </application>
 

@@ -1,4 +1,4 @@
-package me.aflak.libraries.ui.chat.view;
+package me.aflak.libraries.ui.chat.view.Gesture_settings;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,9 +7,8 @@ import android.util.Log;
 import android.widget.TextView;
 
 import me.aflak.libraries.R;
-import me.aflak.libraries.data.GesstureAdapter;
 
-public class Gesture_settings extends AppCompatActivity implements GesstureAdapter.onGestureListener {
+public class Gesture_settings extends AppCompatActivity {
 
     private static final String TAG = "Gesture_settings";
 
@@ -47,8 +46,4 @@ public class Gesture_settings extends AppCompatActivity implements GesstureAdapt
 //                .into(image);
     }
 
-    @Override
-    public void onGestureClick(int position) {
-
-    }
 }

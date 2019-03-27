@@ -12,15 +12,18 @@ import android.widget.TextView;
 import java.util.List;
 
 import me.aflak.libraries.R;
+import me.aflak.libraries.ui.chat.view.ChatActivity;
 
 public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.GestureViewHolder> {
 
     private Context mCtx;
     private List<Gesture_my> gesturesList;
+    private OnGestureMyListener mOnGestureMyListener;
 
-    public GesstureAdapter(Context mCtx, List<Gesture_my> gesturesList) {
+    public GesstureAdapter(ChatActivity  mCtx, List<Gesture_my> gesturesList, OnGestureMyListener onGestureMyListener) {
         this.mCtx = mCtx;
         this.gesturesList = gesturesList;
+        this.mOnGestureMyListener = onGestureMyListener;
     }
 
     @NonNull
@@ -28,8 +31,8 @@ public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.Gestur
     public GestureViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.gestures_lest_layout, null);
-        GestureViewHolder holder = new GestureViewHolder(view);
-        return new GestureViewHolder(view);
+        GestureViewHolder holder = new GestureViewHolder(view, mOnGestureMyListener);
+        return new GestureViewHolder(view, mOnGestureMyListener);
     }
 
     @Override
@@ -48,13 +51,14 @@ public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.Gestur
         return gesturesList.size();
     }
 
-    class GestureViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class GestureViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView imageView;
         TextView textViewName, textViewInfo, textViewTitle, textViewRating, textViewPrice;
-        View.OnClickListener onClickListener;
+        OnGestureMyListener onGestureMyListener;
 
-        public GestureViewHolder(View itemView, View.OnClickListener onClickListener) {
+
+        public GestureViewHolder(View itemView, OnGestureMyListener onGestureMyListener) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.imageView);
@@ -63,17 +67,17 @@ public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.Gestur
             textViewRating = itemView.findViewById(R.id.textViewRating);
             textViewPrice = itemView.findViewById(R.id.textViewPrice);
 
-            this.onClickListener = onClickListener;
+            this.onGestureMyListener = onGestureMyListener;
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-//            onClickListener.onGestureClick(getAdapterPosition());
+            onGestureMyListener.onGestureClick(getAdapterPosition());
         }
     }
 
-    public interface onGestureListener{
+    public interface OnGestureMyListener{
         void onGestureClick(int position);
     }
 }
