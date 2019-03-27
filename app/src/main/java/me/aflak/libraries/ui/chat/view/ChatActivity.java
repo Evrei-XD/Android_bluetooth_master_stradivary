@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -71,6 +72,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     @BindView(R.id.valueCH1) TextView valueCH1;
     @BindView(R.id.valueCH2) TextView valueCH2;
     @BindView(R.id.layout_sensors) RelativeLayout layoutSensors;
+    @BindView(R.id.gestures_list_relative) RelativeLayout layoutGestures;
     @BindView(R.id.activity_chat_hello_world) Button helloWorld;
     @BindView(R.id.activity_chat_hello_world2) Button helloWorld2;
     @BindView(R.id.fab) FloatingActionButton fab;
@@ -112,17 +114,31 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
                     Log.i(TAG, "oncliiiiick");
                     layoutSensors.setVisibility(View.GONE);
                     fab.show();
-//                    fab.setVisibility(View.VISIBLE);
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Snackbar.make(view, "Новый жест добавлен", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                            gestureMyList.add(
+                                    new Gesture_my(
+                                            1,
+                                            R.drawable.three,
+                                            "bla bla bla",
+                                            "жест предназначенный для взятия кружки",
+                                            "Жест №1",
+                                            2,
+                                            123));
+                            gestureAdapter = new GesstureAdapter(ChatActivity.this, gestureMyList);
+                            recyclerView.setAdapter(gestureAdapter);
+                        }
+                    });
+                    layoutGestures.setVisibility(View.VISIBLE);
                     return true;
                 case R.id.navigation_dashboard:
                     Log.i(TAG, ":))");
                     layoutSensors.setVisibility(View.VISIBLE);
                     fab.hide();
-//                    fab.setVisibility(View.GONE);
+                    layoutGestures.setVisibility(View.GONE);
                     return true;
-//                case R.id.navigation_notifications:
-//                    mTextMessage.setText("3");
-//                    return true;
             }
             return false;
 
@@ -143,29 +159,37 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
         gestureMyList.add(
                 new Gesture_my(
                         1,
+                        R.drawable.one,
+                        "bla bla bla",
+                        "13.3 inch, Silver, 1.35 kg",
                         "Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)",
-                        "13.3 inch, Silver, 1.35 kg",
                         4.3,
-                        60000,
-                        R.drawable.macbook));
+                        600000));
 
         gestureMyList.add(
                 new Gesture_my(
                         1,
-                        "Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
+                        R.drawable.two,
+                        "bla bla bla",
                         "14 inch, Gray, 1.659 kg",
+                        "Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
                         4.3,
-                        60000,
-                        R.drawable.dellinspiron));
+                        60000));
 
         gestureMyList.add(
                 new Gesture_my(
                         1,
-                        "Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
+                        R.drawable.three,
+                        "bla bla bla",
                         "13.3 inch, Silver, 1.35 kg",
+                        "Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
                         4.3,
-                        60000,
-                        R.drawable.surface));
+                        60000));
+
+
+
+        gestureAdapter = new GesstureAdapter(this, gestureMyList);
+        recyclerView.setAdapter(gestureAdapter);
 
         DaggerChatComponent.builder()
             .bluetoothModule(MyApp.app().bluetoothModule())
@@ -610,4 +634,11 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+//    @Override
+//    public void onGestureClick(int position) {
+//        gestureMyList.get(position);
+//        Intent intent = new Intent(this, NewActivitie.class);
+//        startActivity(intent);
+//    }
 }

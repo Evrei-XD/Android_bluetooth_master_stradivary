@@ -20,9 +20,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.scan.view.ScanActivity"/>
-
+        <activity android:name=".ui.scan.view.ScanActivity"
+            android:screenOrientation="portrait"/>/>
         <activity android:name=".ui.chat.view.ChatActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.chat.view.Gesture_settings"
             android:screenOrientation="portrait"/>
     </application>
 
