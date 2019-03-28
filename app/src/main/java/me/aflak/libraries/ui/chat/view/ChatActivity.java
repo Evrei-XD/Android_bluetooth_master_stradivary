@@ -617,7 +617,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     protected void onStop() {
         super.onStop();
         if(pervoe_vkluchenie_bluetooth) {
-//            presenter.onStop();
+            presenter.onStop();
         }
     }
 

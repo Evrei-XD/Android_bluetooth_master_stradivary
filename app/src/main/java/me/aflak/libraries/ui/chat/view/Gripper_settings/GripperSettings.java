@@ -1,7 +1,5 @@
 package me.aflak.libraries.ui.chat.view.Gripper_settings;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +8,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.aflak.libraries.MyApp;
 import me.aflak.libraries.R;
@@ -19,27 +18,27 @@ import me.aflak.libraries.ui.chat.presenter.ChatPresenter;
 import me.aflak.libraries.ui.chat.view.ChatView;
 
 
-public class GripperSettings extends AppCompatActivity implements ChatPresenter, ChatView {
-    private SeekBar seekBarFinger1Angle;
-    private SeekBar seekBarFinger2Angle;
-    private SeekBar seekBarFinger3Angle;
-    private SeekBar seekBarFinger4Angle;
-    private SeekBar seekBarFinger5Angle;
-    private SeekBar seekBarFinger1Speed;
-    private SeekBar seekBarFinger2Speed;
-    private SeekBar seekBarFinger3Speed;
-    private SeekBar seekBarFinger4Speed;
-    private SeekBar seekBarFinger5Speed;
-    private TextView valueFinger1Angle;
-    private TextView valueFinger2Angle;
-    private TextView valueFinger3Angle;
-    private TextView valueFinger4Angle;
-    private TextView valueFinger5Angle;
-    private TextView valueFinger1Speed;
-    private TextView valueFinger2Speed;
-    private TextView valueFinger3Speed;
-    private TextView valueFinger4Speed;
-    private TextView valueFinger5Speed;
+public class GripperSettings extends AppCompatActivity implements ChatView {
+    @BindView(R.id.seekBarFinger1Angle) SeekBar seekBarFinger1Angle;
+    @BindView(R.id.seekBarFinger2Angle) SeekBar seekBarFinger2Angle;
+    @BindView(R.id.seekBarFinger3Angle) SeekBar seekBarFinger3Angle;
+    @BindView(R.id.seekBarFinger4Angle) SeekBar seekBarFinger4Angle;
+    @BindView(R.id.seekBarFinger5Angle) SeekBar seekBarFinger5Angle;
+    @BindView(R.id.seekBarFinger1Speed) SeekBar seekBarFinger1Speed;
+    @BindView(R.id.seekBarFinger2Speed) SeekBar seekBarFinger2Speed;
+    @BindView(R.id.seekBarFinger3Speed) SeekBar seekBarFinger3Speed;
+    @BindView(R.id.seekBarFinger4Speed) SeekBar seekBarFinger4Speed;
+    @BindView(R.id.seekBarFinger5Speed) SeekBar seekBarFinger5Speed;
+    @BindView(R.id.valueFinger1Angle) TextView valueFinger1Angle;
+    @BindView(R.id.valueFinger2Angle) TextView valueFinger2Angle;
+    @BindView(R.id.valueFinger3Angle) TextView valueFinger3Angle;
+    @BindView(R.id.valueFinger4Angle) TextView valueFinger4Angle;
+    @BindView(R.id.valueFinger5Angle) TextView valueFinger5Angle;
+    @BindView(R.id.valueFinger1Speed) TextView valueFinger1Speed;
+    @BindView(R.id.valueFinger2Speed) TextView valueFinger2Speed;
+    @BindView(R.id.valueFinger3Speed) TextView valueFinger3Speed;
+    @BindView(R.id.valueFinger4Speed) TextView valueFinger4Speed;
+    @BindView(R.id.valueFinger5Speed) TextView valueFinger5Speed;
     private int intValueFinger1Angle = 50;
     private int intValueFinger2Angle = 50;
     private int intValueFinger3Angle = 50;
@@ -64,26 +63,6 @@ public class GripperSettings extends AppCompatActivity implements ChatPresenter,
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gripper_settings);
-        seekBarFinger1Angle = findViewById(R.id.seekBarFinger1Angle);
-        seekBarFinger2Angle = findViewById(R.id.seekBarFinger2Angle);
-        seekBarFinger3Angle = findViewById(R.id.seekBarFinger3Angle);
-        seekBarFinger4Angle = findViewById(R.id.seekBarFinger4Angle);
-        seekBarFinger5Angle = findViewById(R.id.seekBarFinger5Angle);
-        seekBarFinger1Speed = findViewById(R.id.seekBarFinger1Speed);
-        seekBarFinger2Speed = findViewById(R.id.seekBarFinger2Speed);
-        seekBarFinger3Speed = findViewById(R.id.seekBarFinger3Speed);
-        seekBarFinger4Speed = findViewById(R.id.seekBarFinger4Speed);
-        seekBarFinger5Speed = findViewById(R.id.seekBarFinger5Speed);
-        valueFinger1Angle = findViewById(R.id.valueFinger1Angle);
-        valueFinger2Angle = findViewById(R.id.valueFinger2Angle);
-        valueFinger3Angle = findViewById(R.id.valueFinger3Angle);
-        valueFinger4Angle = findViewById(R.id.valueFinger4Angle);
-        valueFinger5Angle = findViewById(R.id.valueFinger5Angle);
-        valueFinger1Speed = findViewById(R.id.valueFinger1Speed);
-        valueFinger2Speed = findViewById(R.id.valueFinger2Speed);
-        valueFinger3Speed = findViewById(R.id.valueFinger3Speed);
-        valueFinger4Speed = findViewById(R.id.valueFinger4Speed);
-        valueFinger5Speed = findViewById(R.id.valueFinger5Speed);
 
         DaggerChatComponent.builder()
                 .bluetoothModule(MyApp.app().bluetoothModule())
@@ -101,6 +80,11 @@ public class GripperSettings extends AppCompatActivity implements ChatPresenter,
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 valueFinger1Angle.setText(String.valueOf(seekBar.getProgress()));
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                valueFinger1Angle.setText(String.valueOf(seekBar.getProgress()));
                 intValueFinger1Angle = seekBarFinger1Angle.getProgress();
                 numberFinger = 0x01;
                 TextByteTreeg[0] = indicatorTypeMessage;
@@ -115,11 +99,6 @@ public class GripperSettings extends AppCompatActivity implements ChatPresenter,
                     TextByteTreeg[7] = (byte) (TextByteTreeg[7] << 1);
                 }
                 presenter.onHelloWorld(TextByteTreeg);
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                valueFinger1Angle.setText(String.valueOf(seekBar.getProgress()));
             }
         });
 
@@ -287,24 +266,15 @@ public class GripperSettings extends AppCompatActivity implements ChatPresenter,
     }
 
     @Override
-    public void onCreate(Intent intent) {
-
+    protected void onStart() {
+        super.onStart();
+//        presenter.onStart(this);
     }
 
     @Override
-    public void onHelloWorld(byte[] textbyte) {
-
-    }
-
-    @Override
-    public void onStart(Activity activity) {
-
-    }
-    
-    @Override
-    public void onStop() {
+    protected void onStop() {
         super.onStop();
-//        presenter.onStop();
+        presenter.onStop();
     }
 
     @Override
@@ -341,9 +311,4 @@ public class GripperSettings extends AppCompatActivity implements ChatPresenter,
     public void onGestureClick(int position) {
 
     }
-
-//    @Override
-//    public void onGestureClick(int position) {
-//
-//    }
 }
