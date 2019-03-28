@@ -88,10 +88,9 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     private byte indicatorTypeMessage;
     private byte numberChannel;
     public boolean isEnable = false;
-    private boolean firstStart = true;
     private int i = 0;
     public byte[] TextByteTreeg = new byte[8];
-    //for graph
+//    for graph
     private SensorManager sensorManager;
     private Sensor mAccelerometer;
     private LineChart mChart;
@@ -100,6 +99,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     private Thread thread;
     private boolean plotData2 = true;
     String TAG = "thread";
+//    for bluetooth controller restart error
     private boolean pervoe_vkluchenie_bluetooth = true;
 
     RecyclerView recyclerView;
@@ -272,7 +272,6 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
         seekBarCH1off.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                intValueCH1off = seekBar.getProgress();
                 valueCH1off.setText(String.valueOf(seekBar.getProgress()));
             }
 
@@ -618,7 +617,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     protected void onStop() {
         super.onStop();
         if(pervoe_vkluchenie_bluetooth) {
-            presenter.onStop();
+//            presenter.onStop();
         }
     }
 

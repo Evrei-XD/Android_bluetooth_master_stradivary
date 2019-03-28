@@ -46,7 +46,9 @@
                 android:layout_toEndOf="@+id/textViewTitle"
                 android:text="20"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/textViewTitle" />
 
             <TextView
                 android:id="@+id/textViewSpeed2"
@@ -58,7 +60,9 @@
                 android:layout_toEndOf="@+id/textViewTitle"
                 android:text="100"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/textViewTitle" />
 
             <TextView
                 android:id="@+id/textViewTitle3"

@@ -18,7 +18,8 @@ public class ChatPresenterImpl implements ChatPresenter {
     private BluetoothDevice device;
     private byte aByte[] = {0x4D, 0x54, 0x01, 0x00, 0x00, 0x03, 0x00, 0x01, 0x24} ;
     private byte txtbyteout1[] = {0x4D, 0x54, 0x07, 0x00, 0x01, 0x02, 0x00, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x24}; //компановка для отправки порогов сигналов 0x77 заменяемые данные всего 15 байт
-    private byte txtbyteout2[] = {0x4D, 0x54, 0x01, 0x00, 0x00, 0x03, 0x00, 0x77, 0x24};
+    private byte txtbyteout2[] = {0x4D, 0x54, 0x06, 0x00, 0x01, 0x04, 0x00, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x24}; //компановка для настройки схватов сигналов 0x77 заменяемые данные всего 15 байт
+    private byte txtbyteout3[] = {0x4D, 0x54, 0x06, 0x00, 0x01, 0x04, 0x00, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x24}; //компановка для настройки схватов сигналов 0x77 заменяемые данные всего 15 байт
 
     public ChatPresenterImpl(ChatView view, ChatInteractor interactor) {
         this.view = view;
@@ -64,9 +65,7 @@ public class ChatPresenterImpl implements ChatPresenter {
 //        }
         switch (txtbyte[0]) {
             case 1: //компановка посылки записи порогов на любой канал
-//                System.out.println("тип компановки:" + txtbyte[0]);
-//                System.out.println("номер канала получателя:" + txtbyte[1]);
-                view.appendMessage("--> отправка на канал" + txtbyte[1]);
+                System.out.println("номер канала получателя:" + txtbyte[1]);
                 for (int i = 1; i < txtbyte.length; i++)
                 {
                     txtbyteout1[i + 6] = txtbyte[i];
@@ -74,11 +73,26 @@ public class ChatPresenterImpl implements ChatPresenter {
                 interactor.sendMessageByte(txtbyteout1);
                 break;
             case 2:
+
+                break;
+            case 3:
                 System.out.println("--> тип компановки:" + txtbyte[0]);
-                System.out.println("--> номер канала получателя:" + txtbyte[1]);
-                view.appendMessage("--> отправка на канал" + txtbyte[1]);
-                txtbyteout2[7] = txtbyte[1];
-                interactor.sendMessageByte(txtbyteout2);
+                System.out.println("--> номер пальца:" + txtbyte[1]);
+                System.out.println("--> просто двушечка:" + txtbyte[2]);
+                System.out.println("--> просто 21:" + txtbyte[3]);
+                System.out.println("--> по идее 0:" + txtbyte[4]);
+                System.out.println("--> значение скорости:" + txtbyte[5]);
+                System.out.println("--> значение угла:" + txtbyte[6]);
+                System.out.println("--> значение CRC:" + txtbyte[7]);
+                for (int i = 1; i < txtbyte.length; i++)
+                {
+                    txtbyteout3[i + 6] = txtbyte[i];
+                }
+                for (int i = 0; i < txtbyteout3.length; i++)
+                {
+                    System.out.println("<-- посылка:" + txtbyteout3[i]);
+                }
+                interactor.sendMessageByte(txtbyteout3);
                 break;
             default:
                 System.out.println("--> тип компановки:" + txtbyte[0]);
@@ -207,7 +221,7 @@ public class ChatPresenterImpl implements ChatPresenter {
 
     @Override
     public void onStop() {
-        interactor.onStop();
+//        interactor.onStop();
     }
 
     private BluetoothCallback bluetoothCallback = new BluetoothCallback() {
