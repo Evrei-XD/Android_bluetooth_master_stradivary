@@ -2,9 +2,8 @@ package me.aflak.libraries.ui.scan.view;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,9 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.aflak.libraries.MyApp;
-import me.aflak.libraries.data.BluetoothModule;
-import me.aflak.libraries.ui.chat.view.ChatActivity;
 import me.aflak.libraries.R;
+import me.aflak.libraries.ui.chat.view.Gripper_settings.GripperSettings;
 import me.aflak.libraries.ui.scan.data.DaggerScanComponent;
 import me.aflak.libraries.ui.scan.data.ScanModule;
 import me.aflak.libraries.ui.scan.presenter.ScanPresenter;
@@ -127,10 +125,10 @@ public class ScanActivity extends AppCompatActivity implements ScanView {
 
     @Override
     public void navigateToChat(String extraName, BluetoothDevice extraDevice) {
-        Intent intent = new Intent(ScanActivity.this, ChatActivity.class);
+        Intent intent = new Intent(ScanActivity.this, GripperSettings.class);
         intent.putExtra(extraName, extraDevice);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     @Override

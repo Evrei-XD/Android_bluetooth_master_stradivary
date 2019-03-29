@@ -213,7 +213,7 @@ public class Bluetooth {
     }
 
     public void send(byte[] msg, String charset){
-        System.out.println("BLUETOOTH--------------> send");
+        System.out.println("BLUETOOTH--------------> send" + msg[0]);
         try {
             if(!TextUtils.isEmpty(charset)) {
 //                out.write(msg.getByte(charset));//Eg: "US-ASCII" as default
@@ -344,6 +344,7 @@ public class Bluetooth {
         private StringBuffer msgstr = new StringBuffer();
         private byte[] txtbyteout = {0x01, 0x02} ;
         public void run(){
+            System.out.println("BLUETOOTH--------------> ReceiveThread");
             try {
                 while((msg = input.read()) != -1) //((System.in).read(msg)) //((System.in).read(msg))   //((input.read())) != -1
                 {
