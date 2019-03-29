@@ -460,7 +460,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
                 }
             }
         });
-        thread.start();
+//        thread.start();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -616,9 +616,10 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     @Override
     protected void onStop() {
         super.onStop();
-        if(pervoe_vkluchenie_bluetooth) {
+        System.out.println("CHAT_AVTIVITY--------------> onStop");
+//        if(pervoe_vkluchenie_bluetooth) {
             presenter.onStop();
-        }
+//        }
     }
 
     @Override
@@ -663,8 +664,8 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
 //                startActivity(intent5);
 //                break;
             default:
-                Intent intent_b = new Intent(this, Gesture_settings.class);
-                startActivity(intent_b);
+                Intent intent_d = new Intent(this, Gesture_settings.class);
+                startActivity(intent_d);
                 break;
         }
     }

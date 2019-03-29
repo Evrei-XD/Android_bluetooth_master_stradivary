@@ -3,6 +3,8 @@ package me.aflak.libraries.ui.chat.view.Gripper_settings;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -39,6 +41,7 @@ public class GripperSettings extends AppCompatActivity implements ChatView {
     @BindView(R.id.valueFinger3Speed) TextView valueFinger3Speed;
     @BindView(R.id.valueFinger4Speed) TextView valueFinger4Speed;
     @BindView(R.id.valueFinger5Speed) TextView valueFinger5Speed;
+    @BindView(R.id.save_gripper_settings) Button save_gripper_settings;
     private int intValueFinger1Angle = 50;
     private int intValueFinger2Angle = 50;
     private int intValueFinger3Angle = 50;
@@ -69,6 +72,21 @@ public class GripperSettings extends AppCompatActivity implements ChatView {
                 .chatModule(new ChatModule(this))
                 .build().inject(this);
         ButterKnife.bind(this);
+
+        save_gripper_settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextByteTreeg[0] = indicatorTypeMessage;
+                TextByteTreeg[1] = numberFinger;
+                TextByteTreeg[2] = numberFinger;
+                TextByteTreeg[3] = numberFinger;
+                TextByteTreeg[4] = numberFinger;
+                TextByteTreeg[5] = numberFinger;
+                TextByteTreeg[6] = numberFinger;
+                TextByteTreeg[7] = numberFinger;
+                presenter.onHelloWorld(TextByteTreeg);
+            }
+        });
 
         presenter.onCreate(getIntent());
         seekBarFinger1Angle.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
