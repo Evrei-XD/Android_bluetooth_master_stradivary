@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.aflak.libraries.MyApp;
 import me.aflak.libraries.R;
-import me.aflak.libraries.ui.chat.view.Gripper_settings.GripperSettings;
+import me.aflak.libraries.ui.chat.view.ChatActivity;
 import me.aflak.libraries.ui.scan.data.DaggerScanComponent;
 import me.aflak.libraries.ui.scan.data.ScanModule;
 import me.aflak.libraries.ui.scan.presenter.ScanPresenter;
@@ -125,7 +125,7 @@ public class ScanActivity extends AppCompatActivity implements ScanView {
 
     @Override
     public void navigateToChat(String extraName, BluetoothDevice extraDevice) {
-        Intent intent = new Intent(ScanActivity.this, GripperSettings.class);
+        Intent intent = new Intent(ScanActivity.this, ChatActivity.class);
         intent.putExtra(extraName, extraDevice);
         startActivity(intent);
 //        finish();

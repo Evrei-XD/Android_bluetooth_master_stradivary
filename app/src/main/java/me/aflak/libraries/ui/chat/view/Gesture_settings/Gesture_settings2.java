@@ -1,5 +1,6 @@
 package me.aflak.libraries.ui.chat.view.Gesture_settings;
 
+import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -59,12 +60,10 @@ public class Gesture_settings2 extends AppCompatActivity implements GesstureAdap
 
     private void getIncomingIntent(){
         if (getIntent().hasExtra("image_url") && getIntent().hasExtra("image_name")){
-
         }
     }
 
     @Override
-    public void onGestureClick(int position) {
-
+    public void onGestureClick(int position, String extraName, BluetoothDevice extraDevice) {//, String extraName, BluetoothDevice extraDevice
     }
 }

@@ -17,4 +17,7 @@ public interface ChatInteractor {
     void sendMessagestr(String message);
     void onStart(BluetoothCallback bluetoothCallback, Activity activity);
     void onStop();
+    void disconnect();
+    void disable();
+    void enable();
 }

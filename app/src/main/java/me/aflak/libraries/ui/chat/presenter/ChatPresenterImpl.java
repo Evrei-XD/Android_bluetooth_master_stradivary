@@ -30,7 +30,10 @@ public class ChatPresenterImpl implements ChatPresenter {
     public void onCreate(Intent intent) {
         if(intent.getExtras()!=null) {
             device = intent.getExtras().getParcelable("device");
+            System.out.println("ВАЖНО!!!!!!!!!!!! ДЕВАЙС:" + device);
             view.enableHWButton(false);
+        } else {
+            System.out.println("ПИЗДА!!!!!!!!!!!! ПОСЫЛКИ НЕТ!");
         }
     }
 
@@ -225,6 +228,15 @@ public class ChatPresenterImpl implements ChatPresenter {
     public void onStop() {
         interactor.onStop();
     }
+
+    @Override
+    public void disconnect() { interactor.disconnect(); }
+
+    @Override
+    public void disable() { interactor.disable(); }
+
+    @Override
+    public void enable() { interactor.enable(); }
 
     private BluetoothCallback bluetoothCallback = new BluetoothCallback() {
         @Override

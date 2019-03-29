@@ -1,5 +1,6 @@
 package me.aflak.libraries.ui.chat.view.Gesture_settings;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -65,21 +66,23 @@ public class Gesture_settings extends AppCompatActivity implements GesstureAdapt
     }
 
     @Override
-    public void onGestureClick(int position) {
+    public void onGestureClick(int position, String extraName, BluetoothDevice extraDevice) {//, String extraName, BluetoothDevice extraDevice
         switch (position) {
             case 0:
                 Intent intent = new Intent(this, GripperSettings.class);
+                intent.putExtra(extraName,  extraDevice);
                 startActivity(intent);
                 break;
             case 1:
                 Intent intent2 = new Intent(this, GripperSettings.class);
+                intent2.putExtra(extraName,  extraDevice);
                 startActivity(intent2);
                 break;
             default:
-                Intent intent_b = new Intent(this, GripperSettings.class);
-                startActivity(intent_b);
+                Intent intent_d = new Intent(this, GripperSettings.class);
+                intent_d.putExtra(extraName,  extraDevice);
+                startActivity(intent_d);
                 break;
-
         }
     }
 }

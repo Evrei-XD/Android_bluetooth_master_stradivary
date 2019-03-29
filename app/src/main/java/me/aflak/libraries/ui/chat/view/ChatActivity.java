@@ -1,5 +1,6 @@
 package me.aflak.libraries.ui.chat.view;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -50,8 +51,7 @@ import me.aflak.libraries.data.Gesture_my;
 import me.aflak.libraries.ui.chat.data.ChatModule;
 import me.aflak.libraries.ui.chat.data.DaggerChatComponent;
 import me.aflak.libraries.ui.chat.presenter.ChatPresenter;
-import me.aflak.libraries.ui.chat.view.Gesture_settings.Gesture_settings;
-import me.aflak.libraries.ui.chat.view.Gesture_settings.Gesture_settings2;
+import me.aflak.libraries.ui.chat.view.Gripper_settings.GripperSettings;
 
 /**
  * Created by Omar on 20/12/2017.
@@ -107,6 +107,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     List<Gesture_my> gestureMyList;
 
     @Inject ChatPresenter presenter;
+//    @Inject IGetIntent_Device getIntent_device;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -240,6 +241,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
         TextByteTreeg[7] = (byte) (intValueCH1sleep >> 8);
 
         presenter.onCreate(getIntent());
+//        getIntent_device.GetIntent_Device(getIntent());
         seekBarCH1on.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -608,6 +610,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     @Override
     protected void onStart() {
         super.onStart();
+//        presenter.enable();
         if(pervoe_vkluchenie_bluetooth){
             presenter.onStart(this);
         }
@@ -618,9 +621,11 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
         super.onStop();
         System.out.println("CHAT_AVTIVITY--------------> onStop");
 //        System.out.println("CHAT_AVTIVITY--------------> nonStop");
-//        if(pervoe_vkluchenie_bluetooth) {
+        if(pervoe_vkluchenie_bluetooth) {
             presenter.onStop();
-//        }
+//            presenter.disconnect();
+//            presenter.disable();
+        }
     }
 
     @Override
@@ -642,16 +647,18 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     }
 
     @Override
-    public void onGestureClick(int position) {
+    public void onGestureClick(int position, String extraName, BluetoothDevice extraDevice) {//String extraName, BluetoothDevice extraDevice
         switch (position){
             case 0:
-                Intent intent = new Intent(this, Gesture_settings.class);
+                Intent intent = new Intent(this, GripperSettings.class);
+                intent.putExtra(extraName, extraDevice);
                 startActivity(intent);
                 break;
-            case 1:
-                Intent intent2 = new Intent(this, Gesture_settings2.class);
-                startActivity(intent2);
-                break;
+//            case 1:
+//                Intent intent2 = new Intent(this, Gesture_settings2.class);
+//                intent2.putExtra(extraName, extraDevice);
+//                startActivity(intent2);
+//                break;
 //            case 2:
 //                Intent intent3 = new Intent(this, Gesture_settings3.class);
 //                startActivity(intent3);
@@ -665,7 +672,8 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
 //                startActivity(intent5);
 //                break;
             default:
-                Intent intent_d = new Intent(this, Gesture_settings.class);
+                Intent intent_d = new Intent(this, GripperSettings.class);
+                intent_d.putExtra(extraName, extraDevice);
                 startActivity(intent_d);
                 break;
         }

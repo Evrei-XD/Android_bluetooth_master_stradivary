@@ -1,6 +1,8 @@
 package me.aflak.libraries.data;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,12 +14,16 @@ import android.widget.TextView;
 import java.util.List;
 
 import me.aflak.libraries.R;
+import me.aflak.libraries.ui.scan.interactor.ScanInteractor;
 
-public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.GestureViewHolder> {
+public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.GestureViewHolder> implements IGetIntent_Device {
 
     private Context mCtx;
     private List<Gesture_my> gesturesList;
     private OnGestureMyListener mOnGestureMyListener;
+    private BluetoothDevice device;
+    private ScanInteractor interactor;
+    private int position = 0x01;
 
     public GesstureAdapter(Context  mCtx, List<Gesture_my> gesturesList, OnGestureMyListener onGestureMyListener) {
         this.mCtx = mCtx;
@@ -50,6 +56,11 @@ public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.Gestur
         return gesturesList.size();
     }
 
+    @Override
+    public void GetIntent_Device(Intent intent) {
+        device = intent.getExtras().getParcelable("device");
+    }
+
     public class GestureViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView imageView;
@@ -70,13 +81,14 @@ public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.Gestur
             itemView.setOnClickListener(this);
         }
 
+
         @Override
         public void onClick(View v) {
-            onGestureMyListener.onGestureClick(getAdapterPosition());
+            onGestureMyListener.onGestureClick(getAdapterPosition(), "device", device);// "device", device
         }
     }
 
     public interface OnGestureMyListener{
-        void onGestureClick(int position);
+        void onGestureClick(int position, String extraName, BluetoothDevice extraDevice);
     }
 }
