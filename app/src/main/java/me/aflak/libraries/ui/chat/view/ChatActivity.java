@@ -48,6 +48,7 @@ import me.aflak.libraries.MyApp;
 import me.aflak.libraries.R;
 import me.aflak.libraries.data.GesstureAdapter;
 import me.aflak.libraries.data.Gesture_my;
+import me.aflak.libraries.data.IGetIntent_Device;
 import me.aflak.libraries.ui.chat.data.ChatModule;
 import me.aflak.libraries.ui.chat.data.DaggerChatComponent;
 import me.aflak.libraries.ui.chat.presenter.ChatPresenter;
@@ -101,6 +102,8 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
     String TAG = "thread";
 //    for bluetooth controller restart error
     private boolean pervoe_vkluchenie_bluetooth = true;
+    private IGetIntent_Device getIntent_device;
+    private BluetoothDevice device;
 
     RecyclerView recyclerView;
     GesstureAdapter gestureAdapter;
@@ -241,7 +244,10 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
         TextByteTreeg[7] = (byte) (intValueCH1sleep >> 8);
 
         presenter.onCreate(getIntent());
-//        getIntent_device.GetIntent_Device(getIntent());
+        device = getIntent().getExtras().getParcelable("device");
+        System.out.println("ДЕВАЙС из чат активити1:" + device);
+
+
         seekBarCH1on.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -677,5 +683,10 @@ public class ChatActivity extends AppCompatActivity implements ChatView, SensorE
                 startActivity(intent_d);
                 break;
         }
+    }
+
+    public BluetoothDevice GetIntent_Device() {
+        System.out.println("ДЕВАЙС из чат активити:" + this.device);
+        return this.device;
     }
 }

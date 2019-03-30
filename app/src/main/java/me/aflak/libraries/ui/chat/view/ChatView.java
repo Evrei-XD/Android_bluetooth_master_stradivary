@@ -8,5 +8,6 @@ public interface ChatView {
     void appendMessage(String message);
     void enableHWButton(boolean enabled);
     void showToast(String message);
+//    void navigateToGesture(String extraName, BluetoothDevice extraDevice);
 //    void onGestureClick(int position, String extraName, BluetoothDevice extraDevice);
 }

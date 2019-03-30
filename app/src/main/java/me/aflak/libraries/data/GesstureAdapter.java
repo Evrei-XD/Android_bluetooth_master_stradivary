@@ -2,7 +2,6 @@ package me.aflak.libraries.data;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,17 +12,22 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import me.aflak.libraries.R;
-import me.aflak.libraries.ui.scan.interactor.ScanInteractor;
+import javax.inject.Inject;
 
-public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.GestureViewHolder> implements IGetIntent_Device {
+import me.aflak.libraries.R;
+import me.aflak.libraries.ui.chat.view.ChatActivity;
+import me.aflak.libraries.ui.scan.interactor.ScanInteractor;
+import me.aflak.libraries.ui.scan.presenter.ScanPresenter;
+
+public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.GestureViewHolder> {
 
     private Context mCtx;
     private List<Gesture_my> gesturesList;
     private OnGestureMyListener mOnGestureMyListener;
-    private BluetoothDevice device;
     private ScanInteractor interactor;
     private int position = 0x01;
+
+    @Inject ScanPresenter presenter;
 
     public GesstureAdapter(Context  mCtx, List<Gesture_my> gesturesList, OnGestureMyListener onGestureMyListener) {
         this.mCtx = mCtx;
@@ -56,10 +60,6 @@ public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.Gestur
         return gesturesList.size();
     }
 
-    @Override
-    public void GetIntent_Device(Intent intent) {
-        device = intent.getExtras().getParcelable("device");
-    }
 
     public class GestureViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -84,6 +84,8 @@ public class GesstureAdapter extends RecyclerView.Adapter<GesstureAdapter.Gestur
 
         @Override
         public void onClick(View v) {
+            ChatActivity chatActivity = new ChatActivity();
+            BluetoothDevice device = chatActivity.GetIntent_Device();
             onGestureMyListener.onGestureClick(getAdapterPosition(), "device", device);// "device", device
         }
     }

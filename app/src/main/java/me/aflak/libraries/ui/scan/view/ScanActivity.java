@@ -64,6 +64,7 @@ public class ScanActivity extends AppCompatActivity implements ScanView {
     private AdapterView.OnItemClickListener onPairedListItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            System.out.println("ScanActivity--------------> pairedItemClick");
             presenter.pairedItemClick(i);
         }
     };
